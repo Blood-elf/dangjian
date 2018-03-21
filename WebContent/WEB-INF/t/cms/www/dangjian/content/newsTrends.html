@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>${content.title} - ${content.channel.name} - ${site.name}</title>
+<link href="/${res}/css/pages.css" rel="stylesheet" type="text/css" />
+[#include "../include/meta.html"/]
+<style>
+	.newsDetailTxt p{
+    line-height: 22px;
+    color: #565656;
+    font-size: 14px;
+	}
+</style>
+</head>
+<body>
+<div class="wrapper">
+  [#include "../include/header.html"/]
+  [#include "../include/channelNav.html"/]
+<!--end of 导航-->
+  
+  <div class="newsDetail">
+    <div class="newsDetailTime left">
+      <span class="day">${content.date?string("dd")}</span>
+      <span class="date">${content.date?string("yyyy-MM")}</span>
+    </div>
+    <div class="newsDetailCont right">
+      <p class="newsDetailTit">${content.title}</p>
+      <div class="newsDetailTxt">${content.txt!}</div>
+    </div>
+    <div class="newsDetailCont right" style="padding-top:20px;text-align:right">
+      <p>发布者：${content.user.realname!}</p>
+    </div>
+  </div>
+  [#include "../include/footer.html"/]
+</div>
+</body>
+</html>

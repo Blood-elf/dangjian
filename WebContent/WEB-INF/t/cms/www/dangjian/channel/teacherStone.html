@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>党建动态</title>
+<meta charset="utf-8">
+ [#include "../include/meta.html"/]
+<link href="/${res}/css/pages.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="wrapper">
+  [#include "../include/header.html"/]
+  [#include "../include/channelNav.html"/]
+  <!--end of 导航-->
+  
+  <div class="container newsTrends">
+    <div class="newsTrendsTop">${channel.name}</div>
+    <div class="newsTrendsCont">
+    	<ul>
+		[@cms_content_page count='10' titLen='30' channelId=channel.id orderBy='4' channelOption='0' dateFormat='yyyy-MM-dd']
+			[#list tag_pagination.list as a]
+			<li><a href="${a.url}" target="_blank">[@text_cut s=a.title len=titLen append='...'/]</a><span>${a.date?string(dateFormat)}</span></li>
+			[/#list]
+    	</ul>
+    </div>
+   	[#include "../include/page.html"/]
+	[/@cms_content_page]
+  </div>
+  [#include "../include/footer.html"/]
+</div>
+</body>
+</html>

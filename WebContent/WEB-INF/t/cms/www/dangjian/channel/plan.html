@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>计划安排</title>
+[#include "../include/meta.html"/]
+<link href="/${res}/css/pages.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="wrapper">
+  [#include "../include/header.html"/]
+  [#include "../include/channelNav.html"/]
+  <div class="activity container">
+    <div class="activityTop">
+      <span class="left">${channel.name}</span>
+    </div>
+    <div class="orLife" id="searchBox">
+		<div class="orLifeGov">
+	      <span class="left orLifeGovTit">基层党（工）委：</span>
+	      <div class="orLifeSponsor searchLine">
+			<a class="left">全部</a>
+				[@cms_party_committee]
+				[#list partys as p]
+				<span class="left orLifeGovTxt02">
+		        	<select [#if sponsorId??][#if sponsorId! == p.id] class="on" [/#if][/#if]>
+		        	<option value ="0">${p.name}</option>
+					[#list p.typeList as type]
+					<option value ="${p.id}-${type.id}" [#if sponsorValue! == p.id+"-"+type.id] selected="selected" [/#if]>${type.name}</option>
+					[/#list]
+					</select>
+		        </span>
+				[/#list]
+				[/@cms_party_committee]
+		     	<span style="position:relative;display:block;clear:both;"></span>
+	      </div>
+	    </div>
+    </div>
+	[@cms_content_page count='10' myConditions=myConditions recommend='2' orderBy='4' titLen='18' channelId=channel.id dateFormat='yyyy-MM-dd']
+    <div class="newsTrendsCont">
+      <ul>
+      	[#list tag_pagination.list as a]
+	   	<li><a href="${a.url}">[@text_cut s=a.title len=titLen append='...'/]</a><span>[${a.date?string(dateFormat)}]</span></li>
+	   	[/#list]
+      </ul>
+    </div>
+	[#include "../include/page.html"/]
+	[/@cms_content_page]
+  </div>
+  [#include "../include/footer.html"/]
+</div>
+
+<script>
+	$(function(){
+		//“全部”按钮显示红色
+		$(".searchLine").each(function(){
+			if($(this).find(".on").length<1){
+				$(this).children("a:first").addClass("on");
+			}
+		});
+	})
+	$(".searchLine a").on("click",function(){
+		if($(this).hasClass("on")){
+			return;
+		}
+		$(this).siblings(".on").removeClass("on");
+		$(this).addClass("on");
+		search();
+	});
+	$(".orLifeSponsor select").on("change",function(){
+		$(".orLifeSponsor").find(".on").removeClass("on");
+		$(this).addClass("on");
+		search();
+	});
+	function search(){
+		debugger;
+		var url = "${base}/channel/searchPlan.jspx?";
+		var searchBox = $("#searchBox");
+		var sponsor = searchBox.find(".orLifeSponsor .on").val();
+		debugger;
+		if(sponsor&&sponsor!=0)url+="sponsor="+sponsor+"&";
+		if(status)url+="status="+status+"&";
+
+		url= url.substring(0, url.length-1);
+		location.href = url;
+	}
+</script>
+</body>
+</html>

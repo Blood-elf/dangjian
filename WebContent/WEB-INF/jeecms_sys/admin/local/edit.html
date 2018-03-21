@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title></title>
+<#include "/jeecms_sys/head.html"/>
+<script type="text/javascript">
+$(function() {
+	$("#jvForm").validate();
+	//栏目权限对话框
+	$("#channelDialog").dialog({
+		autoOpen: false,
+		modal: true,
+		width: 280,
+		height: 420,
+		position: ["center",20],
+		buttons: {
+			"OK": function() {
+				$(this).dialog("close");
+			}
+		},
+		close: function(event, ui) {
+			//将列表框中已选中的项复制到隐藏表单中
+			var s="";
+			$("#channels").children().each(function(){
+				if($(this).prop("selected")) {
+					s += "<input type='hidden' name='channelIds' value='" +$(this).val()+ "'/>";
+				}
+			});
+			$("#channelIdsContainer").empty().append(s);
+		}
+	});
+	var channels_opened = false;
+	$('#channel').click(function(){
+		//第一次打开，需要获取数据。	
+		if(!channels_opened) {
+			//获取数据
+			$.get("v_channels_edit.do",{"siteId":${site.id},"userId":${cmsAdmin.id}},function(s) {
+				$(s).appendTo("#channels");
+			},"html");
+			channels_opened = true;
+		}
+		$('#channelDialog').dialog('open');
+		return false;
+	});	
+});
+function disChannels(chk) {
+	$("#allChannel").val(chk);
+	if(chk) {
+		$("#channels").addClass("disabled").prop("disabled","disabled").children().each(function(){$(this).removeAttr("selected")});
+		$("#channelIdsContainer").empty();
+	} else {
+		$("#channels").removeAttr("disabled").removeClass("disabled");
+	}
+}
+function allChannelSelect(){
+	$("#allChannelHide").val($("#allChannel").prop("checked"));
+}
+function allControlChannelSelect(){
+	$("#allControlChannelHide").val($("#allControlChannel").prop("checked"));
+}
+</script>
+<style>
+.pn-fcontent label{display:inline-block; margin-right:6px;}
+</style>
+</head>
+<body>
+<div class="page-positon ove">
+  <div class="position-div"><@s.m "global.position"/>: <@s.m "cmsAdminLocal.function"/> > <@s.m "global.edit"/></div>
+</div>
+<div class="box-positon ck">
+	<form class="ropt">
+		<input type="button" value="<@s.m "global.backToList"/>" onclick="history.back();" class="return-button"/>
+	</form>
+	<div class="clear"></div>
+</div>
+<div class="body-box">
+<@p.form id="jvForm" action="o_update.do" labelWidth="12" class="formDefStyle">
+<@p.td width="50" colspan="1" label="cmsUser.username">${cmsAdmin.username}</@p.td>
+<@p.text width="50" colspan="1" label="cmsUser.email" name="email" value=cmsAdmin.email size="30" maxlength="100" class="email"/><@p.tr/>
+<@p.password width="50" colspan="1" label="cmsUser.password" id="password" name="password" maxlength="100" help="cmsUser.password.help"/>
+<@p.password width="50" colspan="1" label="cmsUser.pwdAgain" equalTo="#password" help="cmsUser.password.help"/><@p.tr/>
+<@p.select width="50" colspan="1" label="cmsUser.group" name="groupId" value=cmsAdmin.group.id list=groupList listKey="id" listValue="name" required="true"/>
+<@p.text width="50" colspan="1" label="cmsUser.rank" name="rank" value=cmsAdmin.rank style="width:70px" required="true" class="required digits" maxlength="5" max=currRank help="cmsUser.rank.help"/><@p.tr/>
+<@p.radio width="50" colspan="1" label="cmsUser.disabled" name="disabled" value=cmsAdmin.disabled list={"true":"global.true","false":"global.false"} required="true"/>
+<@p.td width="50" colspan="1" label="cmsUser.loginCount">${cmsAdmin.loginCount}</@p.td><@p.tr/>
+<@p.td width="50" colspan="1" label="cmsUser.register">${cmsAdmin.registerTime?string('yyyy-MM-dd HH:mm:ss')} &nbsp; ${cmsAdmin.registerIp}</@p.td>
+<@p.td width="50" colspan="1" label="cmsUser.lastLogin">${cmsAdmin.lastLoginTime?string('yyyy-MM-dd HH:mm:ss')} &nbsp; ${cmsAdmin.lastLoginIp}</@p.td><@p.tr/>
+<@p.text width="50" colspan="1" label="cmsUser.realname" name="realname" value=cmsAdmin.realname maxlength="100"/>
+<@p.radio width="50" colspan="1" label="cmsUser.gender" name="gender" value=cmsAdmin.gender list={"true":"cmsUser.male","false":"cmsUser.female","":"cmsUser.secrecy"}/><@p.tr/>
+<@p.radio width="50" colspan="2" label="cmsUser.selfAdmin" name="selfAdmin" value=cmsAdmin.selfAdmin list={"true":"global.true","false":"global.false"} required="true" help="cmsUser.selfAdmin.help"/>
+<@p.tr/>
+<@p.select id="role" colspan="2" label="cmsUser.role" name="roleIds" value=roleIds[0] list=roleList listKey="id" listValue="name"  help="cms.admin.role.help" required="true"/><@p.tr/>
+<tr id="tr-sponsor">
+<td width="10%" class="pn-flabel pn-flabel-h">
+<span class="pn-frequired"></span>街道工委:</td>
+<td colspan="4" class="pn-fcontent">	
+	<select id="sponsor_main" class=""></select>
+	<select id="sponsor_type" class=""></select>
+	<select id="sponsor_branch" class=""></select>
+</td>
+<script>
+$(function(){
+	//一些不相关
+	$("#tr-releaseDate").hide();
+	var partys = $.parseJSON('${partys}');
+	var trSponsor=$("#tr-sponsor");
+	var selectMain=$("#sponsor_main");
+	var selectType=$("#sponsor_type");
+	var selectBranch=$("#sponsor_branch");
+	init();
+	function init(){
+		var opts = "";
+		opts+="<option value='-1'>--请选党工委--</option>";
+		$.each(partys,function(i,n){
+			opts+="<option value ="+n.id+">"+n.name+"</option>";
+		});
+		selectMain.html(opts);
+		if($("#role").val()<=3)trSponsor.hide();
+	debugger;
+		var partyId = "${user.partyId!}";
+		var ss= partyId.split('-');
+		if(ss.length<1){
+		}else if(ss.length==1){
+			selectMain.val(ss[0]).attr("name","partyId");
+			selectType.hide();
+			selectBranch.hide();
+		}else if(ss.length==2){
+			selectMain.val(ss[0]);
+			selectMainChange();
+			selectType.val(ss[1]).attr("name","partyId");
+		}else if(ss.length==3){
+			selectMain.val(ss[0]);
+			selectMainChange();
+			selectType.val(ss[1]);
+			selectTypeChange();
+			selectBranch.val(partyId).attr("name","partyId");
+		}
+	}
+	$("#role").on("change",function(){
+		selectMain.val(-1);
+		var role = $(this).val();
+		var frequired = trSponsor.find(".pn-frequired");
+		frequired.html("");
+		trSponsor.find("select").show().removeClass().removeAttr("name");
+		if(role>3){
+			trSponsor.show();
+			frequired.html("*");
+			if(role==4){
+				selectMain.show().attr("name","partyId");
+				selectType.hide();
+				selectBranch.hide();
+			}else if(role==5){
+				trSponsor.find("select").show();
+				selectBranch.attr("name","partyId").addClass("required");
+			}
+		}else{
+			trSponsor.hide();
+		}
+		
+	});
+	selectMain.on("change",function(){
+		selectMainChange();
+	});
+	selectType.on("change",function(){
+		selectTypeChange();
+	});
+	function selectMainChange(){
+		selectType.empty();
+		selectBranch.empty();
+		var partyId = selectMain.val();
+		var typeList = null;
+		debugger;
+		$.each(partys,function(i,n){
+			if(partyId==n.id){
+				typeList = n.typeList;
+				return false;
+			}
+		});
+		var opts = "";
+		opts+="<option value='-1'>--请选分组--</option>";
+		if(typeList){
+			$.each(typeList,function(i,n){
+				opts+="<option value = "+n.id+">"+n.name+"</option>";
+			});
+		}
+		selectType.html(opts);
+	}
+	function selectTypeChange(){
+		selectBranch.empty();
+		var opts = "";
+		var partyId = selectMain.val();
+		var typeId = selectType.val();
+		var branchList = null;
+		$.each(partys,function(i,n){
+			if(partyId==n.id){
+				branchList = n.branchList;
+				return false;
+			}
+			
+		});
+		if(branchList){
+			$.each(branchList,function(i,n){
+				if(n.typeId==typeId)
+					opts+="<option value = '"+partyId+"-"+typeId+"-"+n.id+"'>"+n.branchName+"</option>";
+			});
+		}
+		selectBranch.html(opts);
+	}
+});
+</script>
+</tr>
+<@p.td colspan="2" label="栏目权限" required="false">
+	<@p.text name="step" value=userSite.checkStep class="required digits" style="width:40px;display:none;"/>	
+	<input  class="add" style="width: 100px;" id="channel" type="button" value="<@s.m "cmsUser.channels"/>"/>
+	<input type="hidden" id="allChannel" name="allChannel" value="${userSite.allChannel?string('true','false')}"/>
+	<span id="channelIdsContainer"><#list cmsAdmin.getChannelIds(site.id) as cid><input type="hidden" name="channelIds" value="${cid}"/></#list></span>
+	<div id="channelDialog" title="<@s.m "cmsUser.channels"/>(${site.name})" style="display:none;">
+		<label><input type="checkbox" onclick="disChannels(this.checked)"<#if userSite.allChannel> checked="checked"</#if>/><@s.m "cmsUser.channels.allChannel"/></label>
+		<select id="channels"<#if userSite.allChannel> disabled="disabled" class="disabled"</#if> multiple="multiple" size="15" style="width:100%;height: 80%;"></select>
+	</div>
+<div style="clear:both"></div>
+</@p.td><@p.tr/>
+<@p.td colspan="2">
+	<@p.hidden name="id" value=cmsAdmin.id/>
+	<#list .data_model?keys as pkey>
+		<#if pkey?starts_with('query')><input type="hidden" name="${pkey}" value="${(.data_model[pkey])!?string}"/></#if><#t/>
+	</#list>
+	<@p.submit code="global.submit" class="submit"/><@p.reset code="global.reset" class="cancel"/>
+</@p.td>
+</@p.form>
+</div>
+</body>
+</html>

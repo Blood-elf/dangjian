@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>新用户注册 - ${site.name} - Powered by JEECMS</title>
+[#include "../include/meta.html"/]
+<link type="text/css" rel="stylesheet" href="/${res}/css/register.css" />
+<link href="/${res}/css/pop.css" type="text/css" rel="stylesheet">
+
+<script src="/${res}/js/html5shiv.min.js"></script>
+<script src="/${res}/js/respond.min.js"></script>
+<script type="text/javascript" src="/${res}/js/pop.js"></script>
+
+<script type="text/javascript">
+	$(function(){
+		//tab
+		$(".tab_content").hide();
+		$("ul.tabs li:first").addClass("active").show();
+		$(".tab_content:first").show();
+		//On Click Event
+		$("ul.tabs li").click(function() {
+		    $("ul.tabs li").removeClass("active");
+		    $(this).addClass("active");
+		    $(".tab_content").hide();
+		    var activeTab = $(this).find("a").attr("href");
+		    $(activeTab).fadeIn();
+		    return false;
+		});
+	});
+    $(function() {
+        $(".jvForm").each(function(){$(this).validate()});
+        $(".guestbookCaptcha").click();
+    });
+</script>
+
+</head>
+
+<body style="background-color:#f7f7f7;">
+[#include "../include/header.html"/] 
+<div class="topBar">
+    <div class="container">
+      <span class="topBarTxt">当前位置：</span>
+      <span><a href="${base}">首页</a></span>
+      <span>></span>
+      <span>注册</span>
+    </div>
+  </div>
+  <div class="container register">
+    <div class="registerTop">
+    	<span class="left">新用户注册</span>
+    	<span class="right registerL">已有账号？<a href="login.jspx">马上登陆</a></span>
+    </div>
+    <div class="registerCont">
+    	<!--tab-->
+			<ul class="tabs">
+				<li class="active"><a href="#tab1">在册党员</a></li>
+				<li><a href="#tab2">非在册党员</a></li>
+			</ul>
+			<div class="tab_container">
+				<div id="tab1" class="tab_content" style="display: block;">
+					<form class="jvForm" action="${base}/register.jspx" method="post">
+					<input type="hidden" name="groupId" value="1">
+					<div class="tabCont">
+						<span class="tabTit">*身份证号码</span>
+						<input type="text" vld="{required:true,rangelength:[15,18],username:true,remote:'username_unique.jspx',messages:{remote:'身份证号码已存在'}}" name="username" placeholder="输入正确的身份证号码" class="tabInput" placeholder="请输入正确的身份证号码"/>
+					</div>
+					<div class="tabCont">
+						<span class="tabTit">*真实姓名</span>
+						<input type="text" name="realname" vld="{required:true}" placeholder="请输入真实姓名" class="tabInput" />
+					</div>
+					<div class="tabCont">
+						<span class="tabTit">性别</span>
+						<span class="tabInputSex">
+							<input type="radio" name="gender" value="true"/> 男&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="gender" value="false"/> 女</span>
+					</div>
+					<div class="tabCont">
+						<span class="tabTit">*密码</span>
+						<input id="password" type="password" name="loginPassword" vld="{required:true,rangelength:[${site.passwordMinLen},20]}" class="tabInput register-input" placeholder="请输入密码"/>      
+					</div>
+					<div class="tabCont">
+						<span class="tabTit">*确认密码</span>
+						<input type="password" equalto="#password" placeholder="再次确认密码" vld="{required:true,rangelength:[${site.passwordMinLen},20]}" class="tabInput register-input" />
+					</div>
+					<div class="tabCont">
+						<span class="tabTit">*手机号码</span>
+						<input type="tel" name="phone" vld="{required:true}" placeholder="请输入真实的手机号码" class="tabInput register-input" />
+					</div>
+					<div class="tabCont">
+						<span class="tabTit">邮箱</span>
+						<input class="tabInput" type="text" name="email" vld="{email:true}" placeholder="请输入邮箱"/>
+					</div>
+					<div class="tabCont">
+						<span class="tabTit">*所属党支部</span>
+						<span class="tabSelect" id="spanParty" style="display: table;">
+							<select id="party_main" class="" style="width: 224px;"></select>
+							<select id="party_type" class="" style="width: 100px;"></select>
+							<select id="party_branch" name="partyId" vld="{required:true}" style="margin-top: 15px;width: 350px;"></select>
+						</span>
+						<script>
+						$(function(){
+							//一些不相关
+							debugger;
+							var partys = $.parseJSON('${partys!}');
+							var spanParty=$("#spanParty");
+							var selectMain=$("#party_main");
+							var selectType=$("#party_type");
+							var selectBranch=$("#party_branch");
+							init();
+							function init(){
+								var opts = "";
+								opts+="<option value='-1'>--请选党工委--</option>";
+								$.each(partys,function(i,n){
+									opts+="<option value ="+n.id+">"+n.name+"</option>";
+								});
+								selectMain.html(opts);
+								if($("#role").val()<=3)spanParty.hide();
+							}
+							selectMain.on("change",function(){
+								selectMainChange();
+							});
+							selectType.on("change",function(){
+								selectTypeChange();
+							});
+							function selectMainChange(){
+								selectType.empty();
+								selectBranch.empty();
+								var partyId = selectMain.val();
+								var typeList = null;
+								debugger;
+								$.each(partys,function(i,n){
+									if(partyId==n.id){
+										typeList = n.typeList;
+										return false;
+									}
+								});
+								var opts = "";
+								opts+="<option value='-1'>请选分组</option>";
+								if(typeList){
+									$.each(typeList,function(i,n){
+										opts+="<option value = "+n.id+">"+n.name+"</option>";
+									});
+								}
+								selectType.html(opts);
+							}
+							function selectTypeChange(){
+								selectBranch.empty();
+								var opts = "";
+								var partyId = selectMain.val();
+								var typeId = selectType.val();
+								var branchList = null;
+								$.each(partys,function(i,n){
+									if(partyId==n.id){
+										branchList = n.branchList;
+										return false;
+									}
+									
+								});
+								if(branchList){
+									$.each(branchList,function(i,n){
+										if(n.typeId==typeId)
+											opts+="<option value = '"+partyId+"-"+typeId+"-"+n.id+"'>"+n.branchName+"</option>";
+									});
+								}
+								selectBranch.html(opts);
+							}
+						});
+						</script>
+					</div>
+					<div class="tabCont">
+						<span class="tabTit">企业名称</span>
+						<input class="tabInput" type="text" name="attr_enterprise" placeholder="请输入公司名称"/>
+					</div>
+					<div class="tabCont" style="line-height: unset;">
+						<span class="tabTit"  style="line-height: 40px;">意向志愿服务</span>
+						<div style="display:inline-block;margin-left:26px;">
+							[#include "../include/pop.html"/]
+							<style>
+								.xqdjPop{
+								    border: 1px solid #dddddd;
+								    height: 40px;
+								    width: 326px;
+								    float: left;
+								    padding-left: 22px;
+								}
+							</style>
+						</div>
+					</div>
+					<div class="tabCont">
+						<span class="tabTit">*验证码</span>
+						<input type="text" vld="{required:true}" maxlength="20" name="captcha" style="width: 174px;margin-right: 15px;" class="tabInput register-code" /><i class="code-img" style="display: flex;"><img class="guestbookCaptcha" onclick="this.src='${base}/captcha.svl?d='+new Date()" alt="" src="${base}/captcha.svl"></i>
+					</div>
+					
+					<div class="tabCont">
+						<span class="readxy" style="width: 148px;">
+						<label><input name="readxy" vld="{required:true}" type="checkbox"/>请认真阅读服务协议</label>
+						</span>
+					</div>
+					<div class="tabCont"><input class="zxdySubmit" type="submit" value="注册"></div>
+					
+					</form>
+				</div>
+				<div id="tab2" class="tab_content" style="display: none; ">
+					<form class="jvForm" action="${base}/register.jspx" method="post">
+					<input type="hidden" name="groupId" value="2">
+					<div class="tabCont">
+						<span class="tabTit">*身份证号码</span>
+						<input type="text" vld="{required:true,rangelength:[15,18],username:true,remote:'username_unique.jspx',messages:{remote:'身份证号码已存在'}}" name="username" placeholder="输入正确的身份证号码" class="tabInput" placeholder="请输入正确的身份证号码"/>
+					</div>
+					<div class="tabCont">
+						<span class="tabTit">*真实姓名</span>
+						<input type="text" name="realname" vld="{required:true}" placeholder="请输入真实姓名" class="tabInput" />
+					</div>
+					<div class="tabCont">
+						<span class="tabTit">*密码</span>
+						<input type="password" id="password2" name="loginPassword" vld="{required:true,rangelength:[${site.passwordMinLen},20]}" class="tabInput register-input" placeholder="请输入密码"/>      
+					</div>
+					<div class="tabCont">
+						<span class="tabTit">*确认密码</span>
+						<input type="password" equalto="#password2" placeholder="再次确认密码" vld="{required:true,rangelength:[${site.passwordMinLen},20]}" class="tabInput register-input" />
+					</div>
+					<div class="tabCont">
+						<span class="tabTit">*手机号码</span>
+						<input type="tel" name="phone" vld="{required:true}" placeholder="请输入真实的手机号码" class="tabInput register-input" />
+					</div>
+					<div class="tabCont">
+						<span class="tabTit">*验证码</span>
+						<input type="text" vld="{required:true}" maxlength="20" name="captcha" style="width: 174px;margin-right: 15px;" class="tabInput register-code" /><i class="code-img" style="display: flex;"><img class="guestbookCaptcha" onclick="this.src='${base}/captcha.svl?d='+new Date()" alt="" src="${base}/captcha.svl"></i>
+					</div>
+					<div class="tabCont">
+						<span class="readxy" style="width: 148px;">
+						<label><input name="readxy" vld="{required:true}" type="checkbox"/>请认真阅读服务协议</label>
+						</span>
+					</div>
+					<div class="tabCont">
+						<input class="zxdySubmit" type="submit" value="注册">
+					</div>
+					</form>
+				</div>
+			</div>
+			<!--end of tab-->
+    </div>
+  </div>
+
+[#include "../include/footer.html"/]
+[#include "../include/right-fixed.html"/]
+</body>
+</html>

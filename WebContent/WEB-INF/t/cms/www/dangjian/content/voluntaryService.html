@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>${content.title} - ${content.channel.name} - ${site.name}</title>
+[#include "../include/meta.html"/]
+<link href="/${res}/css/pages.css" rel="stylesheet" type="text/css" />
+<style>
+	.joinContRight p{
+		word-break:break-all;
+	}
+	.jd{text-align:center;}
+	#iWannaJoin a{
+	    position: absolute;
+	    right: 41px;
+	    width: 200px;
+	    font-size: 25px;
+	    line-height: 44px;
+	    border-radius: 4px;
+	    text-align: center;
+	    color: #ffffff;
+    }
+    #iWannaJoin .iwj{
+	    background-color: #da2126;
+    }
+    #iWannaJoin .imjoining{
+	    color: #8a6d6d;
+	    background-color: #eadede;
+    }
+    #iWannaJoin .ivj{
+	    background-color: #a4d4c8;
+	    cursor:default;
+    }
+</style>
+</head>
+<body>
+
+[#-- 计算总参与人数，判断是否已加入 --]
+[#assign vTotalNum = 0/]
+[#assign joinStatus = "<a class='iwj'>我要加入</a>" /]
+[#assign sponsor = "" /]
+[#if content.attr.volunteers??]
+	[#list content.attr.volunteers!?split(",") as v]
+		[#if v!=""]
+			[#assign vTotalNum++/]
+			[#if user??]
+		     	[#if v == ""+user.id]
+		     		[#assign joinStatus = "<a class='ivj'>已报名</a>" /]
+		     	[/#if]
+	     	[/#if]
+     	[/#if]
+	[/#list]
+[/#if]
+[#if content.attr.branch_other??]
+	[#assign sponsor = "-" + content.attr.branch_other/]
+[/#if]
+<div class="wrapper">
+	[#include "../include/header.html"/]
+	[#include "../include/channelNav.html"/]
+<!--end of 导航-->
+	<div class="container join">
+		<div class="joinTop">${content.title}</div>
+		<div class="joinCont">
+			
+			<div id="iWannaJoin">${joinStatus!}</div>
+			<script>
+			//如果过时了就删除掉
+			//if(fresh()){$("#iWannaJoin").remove();}
+			function fresh(){
+				var timeBeginStr = "${content.attr.activity_time!}";
+				if(timeBeginStr!=""){
+					var dateArr = timeBeginStr.split("-"); 
+	                var year = parseInt(dateArr[0]); 
+	                var month; 
+					//处理月份为01这样的情况                          
+					if(dateArr[1].indexOf("0") == 0){ 
+	                    month = parseInt(dateArr[1].substring(1)); 
+	                }else{ 
+	                     month = parseInt(dateArr[1]); 
+	                } 
+	                var day = parseInt(dateArr[2]); 
+	                var date = new Date(year,month -1,day); 
+	                return new Date()<= date;  
+				}
+			}
+			</script>
+			
+			<div class="joinContRight">
+				<div class="joinContLeft left">
+				  <img src="${content.titleImg!}"/>
+				</div>
+				<p><span class="red">时间：</span><span>${content.attr.activity_time!}</span></p>
+				<p><span class="red">地点：</span><span>${content.attr.address!}</span></p>
+				<p><span class="red">主办：</span><span>[@cms_party_committee sponsor = content.attr.sponsor][#list branchs as p]${p.branchName}[/#list][/@cms_party_committee]${sponsor!}</span></p>
+
+				<p><span class="red">已报名志愿者数量：</span><span id="vTotalNum">${vTotalNum}人</span></p>
+				<p><span class="red">志愿者数量上限：</span><span id="vTotalNum">${content.attr.maxcount!}人</span></p>
+				<p><span class="red">联系人：</span><span>${content.attr.leader!}<!-- 张三 --></span></p>
+				<p><span class="red">联系方式：</span><span>${content.attr.tel!}<!-- 85227333 --></span></p>
+				<p><span class="red">服务内容：</span><span>${content.txt!}</span></p>
+			</div>
+		</div>
+	</div>
+  [#include "../include/footer.html"/]
+</div>
+<script>
+$("#iWannaJoin .iwj").on("click",function(){
+	var a = $(this);
+	if(a.hasClass("ivj"))return;
+	$.ajax({
+		type: "POST",
+		dataType:"json",
+		url: "iWannaJoin.jspx",
+		beforeSend: function(){
+			a.html("报名中...").attr("class","imjoining");
+		},
+		data:{
+			contentId:${content.id}
+		},
+		success: function(json){
+			if(json.succ=="true"){
+				a.html("已报名").attr("class","ivj");
+				$("#vTotalNum").html(json.vTotalNum);
+			}else{
+				a.html("我要加入").attr("class","iwj");
+				alert(json.msg);
+			}
+		}
+	});
+});
+</script>
+</body>
+</html>

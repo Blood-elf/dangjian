@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.jeecms.core.entity">
+    <class name="ServiceMap" table="jc_servicemap">
+    	<meta attribute="sync-DAO">false</meta>
+    	<cache usage="read-write"/>
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="increment"></generator>
+        </id>
+        <property name="organizationName" type="java.lang.String">
+            <column name="organization_name" length="100" not-null="true">
+                <comment>组织名称</comment>
+            </column>
+        </property>
+        <property name="transferLongitude" type="java.lang.String">
+            <column name="transfer_longitude" length="50" not-null="true">
+                <comment>党组织关系转接地址经度</comment>
+            </column>
+        </property>
+        <property name="transferLatitude" type="java.lang.String">
+            <column name="transfer_latitude" length="50" not-null="true">
+                <comment>党组织关系转接地址纬度</comment>
+            </column>
+        </property>
+        
+        <property name="transferAddress" type="java.lang.String">
+            <column name="transfer_address" length="500">
+                <comment>党组织关系转接地址</comment>
+            </column>
+        </property>
+        <property name="transferStartdate" type="java.lang.String">
+            <column name="transfer_startdate" length="100">
+                <comment>党组织关系转接开始时间</comment>
+            </column>
+        </property>
+        <property name="transferEnddate" type="java.lang.String">
+            <column name="transfer_enddate" length="100">
+                <comment>党组织关系转接结束时间</comment>
+            </column>
+        </property>
+        <property name="transferScope" type="java.lang.String">
+            <column name="transfer_scope" length="100">
+                <comment>党组织关系转接范围</comment>
+            </column>
+        </property>
+        <property name="transferContactInfo" type="java.lang.String">
+            <column name="transfer_contact_info" length="50">
+                <comment>党组织关系转接联系方式</comment>
+            </column>
+        </property>
+        <property name="serviceAddress" type="java.lang.String">
+            <column name="service_address" length="500">
+                <comment>党群服务中心地址</comment>
+            </column>
+        </property>
+        
+          <property name="serviceLongitude" type="java.lang.String">
+            <column name="service_longitude" length="50">
+                <comment>党群服务中心地址经度</comment>
+            </column>
+        </property>
+        <property name="serviceLatitude" type="java.lang.String">
+            <column name="service_latitude" length="50">
+                <comment>党群服务中心地址纬度</comment>
+            </column>
+        </property>
+        
+        <property name="serviceStartdate" type="java.lang.String">
+            <column name="service_startdate" length="100">
+                <comment>党群服务中心开始时间</comment>
+            </column>
+        </property>
+        <property name="serviceEnddate" type="java.lang.String">
+            <column name="service_enddate" length="100">
+                <comment>党群服务中心结束时间</comment>
+            </column>
+        </property>
+        <property name="serviceScope" type="java.lang.String">
+            <column name="service_scope" length="1000">
+                <comment>党群服务中心内容</comment>
+            </column>
+        </property>
+        <property name="serviceContactInfo" type="java.lang.String">
+            <column name="service_contact_info" length="50">
+                <comment>党群服务中心联系方式</comment>
+            </column>
+        </property>
+        <property name="createTime" type="java.sql.Timestamp">
+            <column name="create_time" length="19" not-null="true">
+                <comment>创建时间</comment>
+            </column>
+        </property>
+        <property name="lastUpdateTime" type="java.sql.Timestamp">
+            <column name="last_update_time" length="19" not-null="true">
+                <comment>最后操作时间</comment>
+            </column>
+        </property>
+        <property name="isDisabled" type="java.lang.Boolean">
+            <column name="is_disabled" not-null="true">
+                <comment>是否显示</comment>
+            </column>
+        </property>
+        
+        <property name="isSame" type="java.lang.Boolean">
+            <column name="is_same" not-null="true">
+                <comment>地址是否相同</comment>
+            </column>
+        </property>
+        
+        <property name="serviceUrl" type="java.lang.String">
+            <column name="service_url" length="100">
+                <comment>服务网址</comment>
+            </column>
+        </property>
+        <property name="description" type="java.lang.String">
+            <column name="description" length="500">
+                <comment>描述</comment>
+            </column>
+        </property>
+        <property name="organizationType" type="java.lang.String">
+            <column name="organization_type" length="20" not-null="true">
+                <comment>组织类型</comment>
+            </column>
+        </property>
+        <many-to-one name="parentOrganization" column="parent_organization" class="com.jeecms.core.entity.ServiceMap" not-null="false"></many-to-one>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,139 @@
+@charset "UTF-8";
+/**
+ *
+ * @authors Vicky Hong (Vicky198808@163.com)
+ */
+
+.register{
+  margin-top: 20px;
+  overflow: visible;
+}
+.registerTop{
+  width: 946px;
+  padding:0 24px 0 40px;
+  height: 56px;
+  background:url(../images/title06.jpg) no-repeat;
+  line-height: 56px;
+  color: #fff;
+  font-size: 22px;
+  font-weight: bold;
+}
+.registerL{
+  color: #fff;
+  font-size: 14px;
+}
+.registerL a{
+  color: #fad03e;
+  font-size: 14px;
+}
+.registerCont{
+  width:944px;
+  padding: 38px 32px;
+  border: 1px solid #d9c1b5;
+  border-top: none;
+}
+.registerCont .tabs{
+  height: 44px;
+  width: 454px;
+  margin: 0 auto;
+}
+.registerCont .tabs li{
+  float: left;
+  width: 30%;
+  margin: 0 10%;
+  line-height: 44px;
+  text-align: center;
+}
+.registerCont .tabs li a{
+  font-size: 14px;
+  color: #727272;
+}
+.registerCont .tabs .active{
+  height: 40px;
+  line-height: 44px;
+  border-bottom: 4px solid #ca3131;
+}
+.registerCont .tabs .active a{
+  color: #000;
+}
+.registerCont .tab_container{
+    width: 486px;
+	margin: 0 auto;
+	overflow: visible;
+	padding-top: 56px;
+}
+.registerCont .tab_container .tabCont{
+  line-height: 40px;
+  font-size: 14px;
+  margin-top: 16px;
+  position:relative;
+}
+.registerCont .tab_container .tabCont:after{
+	content:'';
+	clear:both;
+	display:block;
+}
+.registerCont .tab_container .tabTit{
+	color: #1f1f1f;
+	width: 96px;
+	font-size:14px;
+	text-align: right;
+	float: left;
+}
+.registerCont .tab_container .tabInput{
+  border: 1px solid #dddddd;
+  height:40px;
+  width: 326px;
+  float: left;
+  margin-left:26px;
+  padding-left: 22px;
+}
+.registerCont .tab_container .tabInputSex{
+  margin-left:26px;
+}
+.registerCont .tab_container .tabSelect select{
+  margin-left:26px;
+  border: 1px solid #dddddd;
+  height:40px;
+  width: 348px;
+  float: left;
+  padding-left: 22px;
+}
+.registerCont .tab_container .tabCheckBox{
+  margin-left:26px;
+}
+.registerCont .tab_container .tabCheckBox label{
+  margin-right: 16px;
+}
+.registerCont .tab_container .readxy{
+  margin-left: 98px;
+  text-decoration: underline;
+  color: #0c94eb;
+  font-size: 14px;
+  margin-top: 5px;
+  float: left;
+}
+.registerCont .tab_container .readxy input{
+  margin-right: 6px;
+}
+.registerCont .tab_container .zxdySubmit{
+  width: 346px;
+  height: 46px;
+  border: 1px solid #a91919;
+  background: #c92c2c;
+  float: left;
+  text-align: center;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  float: left;
+  margin: 50px 0 0 50px;
+}
+
+label.error{
+    width: 100%;
+    text-align: right;
+    display: block;
+    color: red;
+    float: right;
+}

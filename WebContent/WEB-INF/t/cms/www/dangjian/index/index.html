@@ -1,0 +1,367 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无锡高新区(新吴区)党建网</title>
+[#include "../include/meta.html"/]
+<link href="/${res}/css/index.css" rel="stylesheet" type="text/css" />
+<link href="/${res}/css/login.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/${res}/js/jquery.SuperSlide.2.1.1.js"></script>
+<script type="text/javascript" src="/${res}/js/banner.js"></script>
+
+<script>
+ 	Date.prototype.Format = function(fmt)   
+	{ //author: meizz   
+	  var o = {   
+	    "M+" : this.getMonth()+1,                 //月份   
+	    "d+" : this.getDate(),                    //日   
+	    "h+" : this.getHours(),                   //小时   
+	    "m+" : this.getMinutes(),                 //分   
+	    "s+" : this.getSeconds(),                 //秒   
+	    "q+" : Math.floor((this.getMonth()+3)/3), //季度   
+	    "S"  : this.getMilliseconds()             //毫秒   
+	  };   
+	  if(/(y+)/.test(fmt))   
+	    fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));   
+	  for(var k in o)   
+	    if(new RegExp("("+ k +")").test(fmt))   
+	  fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
+	  return fmt;   
+	}  
+	$(function(){
+		var time = new Date();
+		var d = time.Format("yyyy年MM月dd日");
+		var w = time.getDay();
+		var week = ['日','一','二','三','四','五','六'];
+		$(".searchFream .date").text(d+" 星期"+week[w]);
+	});
+	function login(){
+		$("#loginBox").show();
+	}
+	function loginClose(){
+		$("#loginBox").hide();
+	}
+</script>
+</head>
+<body>
+<div class="wrapper">
+[#include "../include/header.html"/]
+  <!--end of 导航-->
+  <div class="news">
+    <div class="container">
+      <div class="mainLeft left">
+        <div class="notice">
+          <div class="noticeTop">
+            <div class="noticeTit left">公告栏</div>
+            <div class="noticeMore right"><a href="${base}/noticeBoard/index.jhtml">更多>></a></div>
+          </div>
+          <div class="noticeCont">
+            <ul>
+            [@cms_content_list count='7' titLen='15' orderBy='4' channelId='154' dateFormat='yyyy-MM-dd']
+				[#list tag_list as a]
+				<li><a href="${a.url}" target="_blank">[@text_cut s=a.title len=titLen append='...'/]</a><span>[${a.date?string(dateFormat)}]</span></li>
+				[/#list]
+      	    [/@cms_content_list]
+            </ul>
+          </div>
+        </div>
+        <div class="loginUl">
+          <div class="managerLogin left">
+          <a href="${base}/jeeadmin/jeecms/login.do"><img class="malogin" src="/${res}/images/malogin.jpg"></a></div>
+   		 [#if user??]
+   		    <div class="dyLogin right"><a href="${base}/member/index.jspx" style="font-weight: bold;"><img src="/${res}/images/vipcenter.png"></a></div>
+   		    <div class="dyLogin right"><a href="logout.jspx" style="font-weight: bold;"><img src="/${res}/images/viplogout.png"></a></div>
+	      [#else]
+			<div class="dyLogin right"><a onclick="login()"><img class="dylogin" src="/${res}/images/dylogin.jpg"></a></div>
+	      [/#if]
+        </div>
+        <div class="email"><a href="${base}/xwIntro.jhtml"><img src="/${res}/images/xqjj.jpg"></a></div>
+      </div>
+      <!--end of left-->
+      <div class="mainRight right">
+        <div class="djdt">
+          <div class="djdtTop">
+            <div class="djdtTit left">党建动态</div>
+            <div class="djdtMore right"><a href="${base}/newsTrends/index.jhtml"><img src="/${res}/images/more03.png"/></a></div>
+          </div>
+          <div class="djdtCont">
+            <div class="djdtContLeft left">
+              <div id="slideBox" class="slideBox">
+                <div class="hd">
+                    <ul>
+			        	[@cms_content_list  typeId='2' count='5' titLen=22 orderBy='4' channelId='117']
+						[#list tag_list as a]
+						<li>${a_index+1}</li>
+						[/#list]
+					    [/@cms_content_list]
+					</ul>
+                </div>
+                <div class="bd">
+                  <ul>
+		            [@cms_content_list typeId='2' count='5' titLen='22' orderBy='4' channelId='117']
+						[#list tag_list as a]
+						<li><a href="${a.url}"  target="_blank"><img src="${a.typeImg!}" /></a><span>[@text_cut s=a.title len=titLen append='...'/]</span></li>
+						[/#list]
+		      	    [/@cms_content_list]
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!--end of 轮播-->
+            <div class="djdtContRight right">
+              <ul>
+	            [@cms_content_list count='10' titLen=22 orderBy='4' channelId='117' dateFormat='MM-dd']
+				[#list tag_list as a]
+				<li><a href="${a.url}" target="_blank">[@text_cut s=a.title len=titLen append='...'/]</a><span>[${a.date?string(dateFormat)}]</span></li>
+				[/#list]
+	      	    [/@cms_content_list]
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!--end of 党建动态-->
+      </div>
+      <!--end of right-->
+    </div>
+    <div class="container">
+      <div class="xqsurvey left">
+        <div class="xqsurveyTop">
+          <div class="xqsurveyTit left">党建地图</div>
+          <div class="xqsurveyMore right"><a href="${base}/serviceMap/index.jhtml"><img src="/${res}/images/more02.png"/></a></div>
+        </div>
+        <div class="xqsurveyCont">
+        <a src = "${base}/serviceMap/index.jhtml"><img src="/${res}/images/map.jpg"/></a>
+        </div>
+      </div>
+      <!--end of 党建地图-->
+      <div class="newpart02 right">
+        <div class="newpart02Top">党建课堂</div>
+        <div class="newsTab">
+           <div class="hd">
+              <ul>
+				[@cms_channel_list parentId=121]
+				[#list tag_list as c2]
+				     <li><a href="${c2.url}" target="_blank">${c2.name}</a></li>
+				[/#list]
+				[/@cms_channel_list]
+              </ul>
+            </div>
+            <div class="bd">
+				[@cms_channel_list parentId=121]
+				[#list tag_list as c3]
+				<ul>
+					[@cms_content_list count=10 titLen=22 channelId=c3.id  dateFormat='MM-dd'] 
+					[#list tag_list as a]
+					<li><a href="${a.url}" target="_blank">[@text_cut s=a.title len=titLen append='...'/]</a><span>[${a.date?string(dateFormat)}]</span></li>
+					[/#list] 
+					[/@cms_content_list]
+				</ul>
+				[/#list]
+				[/@cms_channel_list]
+          </div>
+        </div>
+      </div>
+      <!--end of newpart02-->
+    </div>
+    <!--end of part02-->
+    <div class="djIMG" id= "djIMG">
+      <div class="hd">
+        <ul>
+        	[@cms_content_list count='2' orderBy='4' channelId='153']
+			[#list tag_list as a]
+			<li>${a_index+1}</li>
+			[/#list]
+		    [/@cms_content_list]
+		</ul>
+      </div>
+       <div class="bd">
+         <ul>
+		    [@cms_content_list count='2' orderBy='4' channelId='153' ]
+			[#list tag_list as a]
+			<li><a [#if a.originUrl??] href="${a.originUrl!}" target="_blank" [/#if]><img src="${a.titleImg!}"/></a></li>
+			[/#list]
+		    [/@cms_content_list]
+         </ul>
+       </div>
+    </div>
+    <div class="container">
+      <div class="mainLeft left">
+        <!--end of 新区概况-->
+        <div class="xqbbBox">
+          <div class="xqsurveyTop">
+            <div class="xqsurveyTit left">党建百宝箱</div>
+            <div class="xqsurveyMore right"><a href="magicBox/index.jhtml"><img src="/${res}/images/more02.png"/></a></div>
+          </div>
+          <div class="xqbbBoxCont">
+			[@cms_content_list orderBy='5' channelId='150']
+			[#assign m = 0]
+			[#assign n = 4]
+				[#list tag_list as a]
+				[#assign m++]
+				[#if m==n]
+					[@cms_channel id='152']
+					<a href="magicBox/index.jhtml?page=${tag_bean.url}"><img src="${tag_bean.titleImg!}"/></a>
+					[/@cms_channel]
+				[/#if]
+			          <a href="magicBox/index.jhtml?page=${a.url}"><img src="${a.titleImg!}"/></a>
+				[/#list]
+			[/@cms_content_list]
+          </div>
+        </div>
+      </div>
+      <div class="mainRight right">
+        <div class="newpart01">
+          <div class="newsPublic left">
+            <div class="newsPublicTop">
+              <div class="newsPublicTit left">组织生活</div>
+              <div class="newsPublicMore right"><a href="${base}/organizeLife/index.jhtml">更多>></a></div>
+            </div>
+            <div class="newsPublicCont">
+              <ul>
+				[@cms_content_list count=7 titLen=22 orderBy=4  channelId='105' dateFormat='MM-dd'] 
+				[#list tag_list as a]
+				<li><a href="${a.url}" target="_blank">[@text_cut s=a.title len=titLen append='...'/]</a><span>[${a.date?string(dateFormat)}]</span></li>
+				[/#list] 
+				[/@cms_content_list]
+              </ul>
+            </div>
+          </div>
+          <div class="newsPublic right">
+            <div class="newsPublicTop">
+              <div class="newsPublicTit left">志愿服务</div>
+              <div class="newsPublicMore right"><a href="${base}/voluntaryService/index.jhtml">更多>></a></div>
+            </div>
+            <div class="newsPublicCont">
+              <ul>
+				[@cms_content_list count=7 titLen=22 orderBy=4 channelId='119' dateFormat='MM-dd'] 
+				[#list tag_list as a]
+				<li><a href="${a.url}" target="_blank">[@text_cut s=a.title len=titLen append='...'/]</a><span>[${a.date?string(dateFormat)}]</span></li>
+				[/#list] 
+				[/@cms_content_list]
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!--end of newpart01-->
+        <div class="newpart03">
+          <div class="newpart03Top">党群一体</div>
+          <div class="newsTab">
+            <div class="hd">
+              <ul>
+                <li><a href = "http://www.wndftu.org.cn" target="_blank">职工之家</a></li>
+                <li><a href = "${base}/youth/index.jhtml">团聚新吴</a></li>
+                <li><a href = "${base}/women/index.jhtml">女性之家</a></li>
+              </ul>
+            </div>
+            <div class="bd">
+              <ul>
+				[@cms_content_list count=10 titLen=22 channelId=129  dateFormat='MM-dd'] 
+				[#list tag_list as a]
+				<li><a href="${a.origin}" target="_blank">[@text_cut s=a.title len=titLen append='...'/]</a><span>[${a.date?string(dateFormat)}]</span></li>
+				[/#list] 
+				[/@cms_content_list]
+              </ul>
+              <ul>
+				[@cms_content_list count=10 titLen=22 channelId=139  dateFormat='MM-dd'] 
+				[#list tag_list as a]
+				<li><a href="${a.url}" target="_blank">[@text_cut s=a.title len=titLen append='...'/]</a><span>[${a.date?string(dateFormat)}]</span></li>
+				[/#list] 
+				[/@cms_content_list]
+              </ul>
+              <ul>
+				[@cms_content_list count=10 titLen=22 channelId=143  dateFormat='MM-dd'] 
+				[#list tag_list as a]
+				<li><a href="${a.url}" target="_blank">[@text_cut s=a.title len=titLen append='...'/]</a><span>[${a.date?string(dateFormat)}]</span></li>
+				[/#list] 
+				[/@cms_content_list]
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!--end of newpart03-->
+      </div>
+    </div>
+    <!--end of part02-->
+  </div>
+  <!--end of news-->
+  [#include "../include/footer.html"/]
+</div>
+</div>
+<div id="utils">
+	<div id = "loginBox" [#if message??]style="display:block;"[#elseif error??]style="display:block;"[#else]style="display:none"[/#if]>
+	  	<div class="overlay"></div>
+		<div class="login">
+	  		<div class="loginTop">
+				<span class="loginTit left">账号登录</span>
+				<span class="loginClose right pointer"><img src="/${res}/images/close.png" onclick="loginClose()"/></span>
+			</div>
+			<div class="loginCont">
+				<div class="loginContTop">
+					<span class="loginConTopL left">欢迎回来</span>
+					<span class="loginConTopR right">还没有账号？<a class="red" href="${base}/register.jspx">立即注册</a></span>
+				</div>
+				<form action="${base}/login.jspx" method="post">
+				[#if message??]
+					[#if message=="true"]
+					您必须登录后才能继续刚才的操作
+					[#else]
+					${message}
+					[/#if]
+					<input type="hidden" name="message" value="${message}"/>
+				[/#if]
+				<div class="loginUser">
+					<input type="text" name="username" placeholder="身份证号码">
+				</div>
+				<div class="loginPassword">
+					<input type="password" name="password" placeholder="密码">
+				</div>
+				[#if (errorTimes??&&errorTimes>=3)||(errorRemaining?? && errorRemaining<=0)]
+				<div class="captcha-con clearfix"><i></i><input type="text" id="captcha" name="captcha" class=""required captcha-input" placeholder="验证码"/><img style="height:40px" src="${base}/captcha.svl" onclick="this.src='${base}/captcha.svl?d='+new Date()*1" /></div>
+				[/#if]
+				[#if processUrl??]<input type="hidden" name="processUrl" value="${processUrl}"/>[/#if]
+				[#if returnUrl??]<input type="hidden" name="returnUrl" value="${returnUrl}"/>[#else]<input type="hidden" name="returnUrl" value="/"/>[/#if]
+				
+				[#if error??]
+				<div class="error-message">
+						[#if error=="org.apache.shiro.authc.IncorrectCredentialsException"]
+						[@s.m "error.invalidPassword"/]
+						[#elseif error=="org.apache.shiro.authc.UnknownAccountException"]
+						[@s.m "error.usernameNotExist"/]
+						[#elseif error=="com.jeecms.common.security.CaptchaErrorException"]
+						[@s.m "error.invalidCaptcha"/]
+						[#elseif error=="com.jeecms.common.security.DisabledException"]
+						[@s.m "error.userDisabled"/]
+						[#elseif error=="com.jeecms.common.security.InactiveException"]
+						[@s.m "error.userInActive"/]
+						[#elseif error=="com.jeecms.common.security.AdminNoAuthException"]
+						[@s.m "error.adminNoAuthException"/]
+ 						[/#if]
+				</div>	
+				[/#if]
+				<div class="loginBtn">
+					<input type="submit" class="pointer" value="登          录">
+				</div>
+				</form>
+				<p class="loginUnusual">如登录异常，请清理浏览器缓存后再尝试<a class="red">忘记密码？</a></p>
+			</div>
+	  	</div>
+	  	<style>
+	  		.captcha-con{padding: 10px 2px 0;}
+	  		#captcha{
+			    height: 40px;
+			    padding: 0 19px;
+			    border: 0;
+			    text-align: center;
+			    margin-right: 10px;
+	  		}
+	  	</style>
+  	</div>
+</div>
+</body>
+<script>
+$("html,body").animate({"scrollTop": "110px"}, 10); 
+jQuery(".newsTab").slide();
+jQuery(".slideBox").slide({mainCell:".bd ul",autoPlay:true});
+jQuery(".djIMG").slide({mainCell:".bd ul",autoPlay:true});
+</script>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>党建百宝箱</title>
+<meta charset="utf-8">
+ [#include "../include/meta.html"/]
+<link href="/${res}/css/pages.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="wrapper">
+  [#include "../include/header.html"/]
+  [#include "../include/channelNav.html"/]
+  <!--end of 导航-->
+  
+  <div class="container djbbBox">
+    <div class="djbbBoxLeft left">
+      <div class="djbbMenu">
+        <div class="djbbMenuTop">党建百宝箱</div>
+        <div class="djbbMenuCont">
+		    <ul>
+			[@cms_content_list orderBy='5' channelId='150']
+				[#assign m = 0]
+				[#assign n = 4]
+				[#list tag_list as a]
+				[#assign m++]
+				[#if m==n]
+					[@cms_channel id='152']
+					<li><a href="${tag_bean.url}" target="djbbBoxRight">${tag_bean.name}</a></li>
+					[/@cms_channel]
+				[/#if]
+		          <li><a href="${a.url}" target="djbbBoxRight">${a.title}</a></li>
+				[/#list]
+			[/@cms_content_list]
+		  	</ul>
+		</div>
+        <div class="djbbMenuCont">
+         <ul>
+          
+          </ul>
+        </div>
+      </div>
+      <!--end of djbbMenu-->
+    </div>
+    <!--end of djbbBoxLeft-->
+    <iframe id="djbbBoxRightIfrm" name = "djbbBoxRight" style="display:none"></iframe>
+    <div id="djbbBoxRight"></div>
+  </div>
+  [#include "../include/footer.html"/]
+</div>
+<script>
+function GetUrlParms(){
+    var args=new Object();   
+    var query=location.search.substring(1);//获取查询串   
+    var pairs=query.split("&");//在逗号处断开   
+    for(var   i=0;i<pairs.length;i++){   
+        var pos=pairs[i].indexOf('=');//查找name=value   
+            if(pos==-1)   continue;//如果没有找到就跳过   
+            var argname=pairs[i].substring(0,pos);//提取name  
+            var value=pairs[i].substring(pos+1);//提取value  
+            args[argname]=unescape(value);//存为属性   
+    }
+    return args;
+}
+$(function(){
+	var args = new Object();
+	args = GetUrlParms();
+	var page;
+	if(args['page']){
+		page=args['page'];
+	}else{
+		page=$(".djbbMenuCont a:first").attr("href");
+	}
+	pageUrl=page;
+	$('#djbbBoxRightIfrm').attr("src",page);
+});
+function changeURLArg(url,arg,arg_val){ 
+   var pattern=arg+'=([^&]*)'; 
+   var replaceText=arg+'='+arg_val; 
+   if(url.match(pattern)){ 
+       var tmp='/('+ arg+'=)([^&]*)/gi'; 
+       tmp=url.replace(eval(tmp),replaceText); 
+       return tmp; 
+   }else{ 
+       if(url.match('[\?]')){ 
+           return url+'&'+replaceText; 
+       }else{ 
+           return url+'?'+replaceText; 
+       } 
+   } 
+    return url+'\n'+arg+'\n'+arg_val; 
+}
+var pageUrl;
+$(".djbbMenuCont a").on("click",function(){
+	pageUrl=$(this).attr("href");
+});
+$('#djbbBoxRightIfrm').load(function(){
+	var vnd=this.contentWindow;
+	var res=$(vnd.document.body).html();
+	$("#djbbBoxRight").html(res);
+	var currentState = history.state;
+	console.log(this);
+	debugger;
+	var newUrl = changeURLArg("","page",pageUrl);
+	var json={time:new Date().getTime()}; 
+	window.history.pushState(json, "", newUrl);
+});
+
+</script>
+</body>
+</html>

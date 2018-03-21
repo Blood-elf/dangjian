@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>组织生活</title>
+[#include "../include/meta.html"/]
+<link href="/${res}/css/pages.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+<div class="wrapper">
+	[#include "../include/header.html"/]
+	<div class="topBar">
+    	<div class="container">
+		    <span class="topBarTxt">您的位置：</span>
+		    <span><a href="/dangjian">首页</a></span>
+		    <span>&gt;</span>
+		    <span><a href="http://localhost:8080/dangjian/organizeLife/index.jhtml">组织生活</a></span>
+		    
+	    </div>
+	</div>
+	<div class="activity container">
+		<div class="activityTop">
+		    <span class="left">组织生活</span>
+		    <span class="right activityImg"><a href="${base}/plan/index.jhtml"><img src="/${res}/images/activity.png"/></a></span>
+	  	</div>
+	  	<div class="orLife" id="searchBox">
+		  	[@cms_model id="10"]
+			[#list tag_bean.items as item]
+			[#if item.field=="sponsor"]
+			  [#assign list_sponsor=item.optValue!/]
+			[#elseif item.field=="activity_type"]
+			  [#assign list_activity_type=item.optValue/]
+			[#elseif item.field=="status"]
+			  [#assign list_status=item.optValue/]
+			[/#if]
+			[/#list]
+			<div class="orLifeGov">
+		      <span class="left orLifeGovTit">基层党（工）委：</span>
+		      <div class="orLifeSponsor searchLine">
+			      <a class="left">全部</a>
+			      [@cms_party_committee]
+					[#list partys as p]
+					<span class="left orLifeGovTxt02">
+			        	<select [#if sponsorId??][#if sponsorId! == p.id] class="on" [/#if][/#if]>
+			        	<option value ="0">${p.name}</option>
+						[#list p.typeList as type]
+						<option value ="${p.id}-${type.id}" [#if sponsorValue! == p.id+"-"+type.id] selected="selected" [/#if]>${type.name}</option>
+						[/#list]
+						</select>
+			        </span>
+					[/#list]
+					[/@cms_party_committee]
+					<span style="position:relative;display:block;clear:both;"></span>
+		      </div>
+		    </div>
+		    <div class="orLifeGov">
+		      <span class="left orLifeGovTit">活动时间：</span>
+		      <div class="left orLifeTime searchLine">
+				<a>全部</a>
+				<a value="lastWeek" [#if activity_time! == 'lastWeek']class="on"[/#if]>最近一周</a>
+		        <a value="lastMonth" [#if activity_time! == 'lastMonth']class="on"[/#if]>最近一月 </a>
+		        <a value="lastThreeMonth" [#if activity_time! == 'lastThreeMonth']class="on"[/#if]>最近三月 </a>
+		      </div>
+		    </div>
+		    <div class="orLifeGov">
+		      <span class="left orLifeGovTit">活动类型：</span>
+		      <div class="left orLifeType searchLine">
+				<a>全部</a>
+		      	[#list list_activity_type!?split(",") as opt]
+		      	<a value="${opt!}" [#if activity_type??][#if activity_type=="${opt}"] class = "on"[/#if][/#if]>${opt!}</a>
+				[/#list]
+		      </div>
+		    </div>
+		    <div class="orLifeGov">
+		      <span class="left orLifeGovTit">活动状态：</span>
+		      <div class="left orLifeStatus searchLine">
+				<a>全部</a>
+				[#assign sBefore = "未开始"/]
+				[#assign sOn = "进行中"/]
+				[#assign sAfter = "已结束"/]
+		      	<a value="${sBefore}" [#if status??][#if status=="${sBefore}"] class = "on"[/#if][/#if]>${sBefore}</a>
+		      	<a value="${sOn}" [#if status??][#if status=="${sOn}"] class = "on"[/#if][/#if]>${sOn}</a>
+		      	<a value="${sAfter}" [#if status??][#if status=="${sAfter}"] class = "on"[/#if][/#if]>${sAfter}</a>
+		      </div>
+		    </div>
+			[/@cms_model]
+		</div>
+		<div class="orLifeCont">
+		[@cms_content_page count='6' myConditions=myConditions recommend='2' orderBy='4' titLen='18' channelId=105 dateFormat='yyyy-MM-dd hh:mm']
+			[#list tag_pagination.list as a]
+			<div class="orLifeModule left">
+				<div class="orLifeImg">
+					<a href="${a.url}"><img src="${a.titleImg!}"/></a>
+					<div class="orLifeTxtDiv">
+						<span class="orLifeTxt">[@text_cut s=a.title len=titLen append='...'/]</span>
+						<span class="orLifeTxtBg"></span>
+					</div>
+				</div>
+				<div class="orLifeModule01">
+					<div class="orLifeSj left">时间：<span class="red">${a.attr.activity_time}</span></div>
+					<div class="orLifeZb right">主办：[@cms_party_committee sponsor=a.attr.sponsor][#list partyCommittees as p]<span title= "${p.branchName}">${p.branchName}</span>[/#list][/@cms_party_committee]</div>
+				</div>
+				<div class="orLifeModule02">
+					<div class="orLifeAddress left">地址：<span class="red">[@text_cut s=a.attr.address len=titLen append='...'/]</span></div>
+					<div class="orLifeBtn right"><a href="${a.url}"><img src="/${res}/images/orBtn.jpg"/></a></div>
+				</div>
+			</div>
+	        [/#list]
+		</div>
+	    [#include "../include/page.html"/]
+		[/@cms_content_page]
+	</div>
+	[#include "../include/footer.html"/]
+</div>
+<script>
+	$(function(){
+		$(".searchLine").each(function(){
+			if($(this).find(".on").length<1){
+				$(this).children("a:first").addClass("on");
+			}
+		});
+	})
+	$(".searchLine a").on("click",function(){
+		if($(this).hasClass("on")){
+			return;
+		}
+		$(this).siblings(".on").removeClass("on");
+		$(this).addClass("on");
+		search();
+	});
+	$(".orLifeSponsor select").on("change",function(){
+		$(".orLifeSponsor").find(".on").removeClass("on");
+		$(this).addClass("on");
+		search();
+	});
+	function search(){
+		debugger;
+		var url = "${base}/channel/searchOrganizeLife.jspx?";
+		var searchBox = $("#searchBox");
+		var sponsor = searchBox.find(".orLifeSponsor .on").val();
+		var activity_time = searchBox.find(".orLifeTime .on").attr("value");
+		var activity_type = searchBox.find(".orLifeType .on").attr("value");
+		var status = searchBox.find(".orLifeStatus .on").attr("value");
+		debugger;
+		if(sponsor&&sponsor!=0)url+="sponsor="+sponsor+"&";
+		if(activity_time)url+="activity_time="+activity_time+"&";
+		if(activity_type)url+="activity_type="+activity_type+"&";
+		if(status)url+="status="+status+"&";
+
+		url= url.substring(0, url.length-1);
+		location.href = url;
+	}
+</script>
+</body>
+</html>

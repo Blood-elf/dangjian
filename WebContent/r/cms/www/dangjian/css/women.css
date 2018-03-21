@@ -1,0 +1,287 @@
+@charset "UTF-8";
+/**
+ *
+ * @authors Vicky Hong (Vicky198808@163.com)
+ */
+.womenLogo{
+	width: 350px;
+	height: 135px;
+}
+.womenLogo img{
+	width: 350px;
+	height: 135px;
+}
+.womenBanner{
+	height: 68px;
+	padding: 33px 0 34px;
+}
+.womenBanner li{
+	float: left;
+	line-height: 68px;
+	padding: 0;
+	margin: 0 0 0 20px;
+	background:url(../images/li.jpg) no-repeat right center;
+}
+.womenBanner li:last-child{
+	background: none;
+}
+.womenBanner li a{
+	color: #333333;
+	font-size: 14px;
+	line-height: 44px;
+	padding: 12px 20px 12px 20px;
+	float: left;
+	margin-right: 20px;
+}
+.womenBanner li a span{
+	width: 100%;
+	float: left;
+	text-align: center;
+	line-height: 22px
+}
+.womenBanner li a:hover{
+	background: #ff8499;
+	padding: 12px 20px;
+	height: 44px;
+	line-height: 44px;
+	color: #fff;
+	float: left;
+}
+.womenBanner .active a{
+	background: #ff8499;
+	padding: 12px 20px;
+	height: 44px;
+	line-height: 44px;
+	color: #fff;
+	float: left;
+}
+.womenTop{
+	position: relative;
+	margin:0 auto;
+	overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+.womanImg01{
+
+	height: 451px;
+
+	position: absolute;
+	z-index: 0;
+}
+.womanImg01 img{
+	width: 1440px;
+	height: 451px;
+}
+.womenTab{
+	width:1010px;
+	text-align:left;
+	margin: 365px auto 0;
+	/*position: absolute;
+	top:365px;*/
+	display: block;
+}
+.womenTab .hd{
+	border-bottom:1px solid #cccccc;
+	position:relative;
+	height: 197px;
+	margin: 0 1px;
+}
+.womenTab .hd ul{
+	float:left;
+	position:absolute;
+	left:0px;
+	height: 197px;
+
+}
+.womenTab .hd ul li{
+	float:left;
+	width: 252px;
+	text-align: center;
+	cursor:pointer;
+	height: 187px;
+	margin: 10px 0 0 0;
+
+}
+.womenTab .hd .zjfl{
+	background: #ffdbe4;
+	height:187px;
+}
+.womenTab .hd .fldt{
+	background:#fff9aa;
+	height: 187px;
+}
+.womenTab .hd .wjzl{
+	background:#ffd7c1;
+	height: 187px;
+}
+.womenTab .hd .zxyx{
+	background:#cae8d0;
+	height: 187px;
+}
+.womenTab .hd span{
+	width: 100%;
+	float: left;
+	text-align: center;
+}
+.womenTab .hd .womenTabIcon{
+	margin-top:30px;
+}
+.womenTab .hd .womenTxt01{
+	color: #a15f17;
+	font-size: 12px;
+	margin-top: 20px;
+	font-family: Arial;
+	font-weight: bold;
+}
+.womenTab .hd .womenTxt02{
+	color: #5d370d;
+	font-size: 20px;
+	font-weight: bold;
+	margin-top: 6px;
+}
+.womenTab .hd ul li.on{
+	height:197px;
+	margin: 0;
+}
+.womenTab .hd .zjfl.on{
+	border-top: 10px solid #ffecf0;
+	height: 187px;
+}
+.womenTab .hd .fldt.on{
+	border-top: 10px solid #fffcd0;
+	height: 187px;
+}
+.womenTab .hd .wjzl.on{
+	border-top: 10px solid #ffe8d9;
+	height: 187px;
+}
+.womenTab .hd .zxyx.on{
+	border-top: 10px solid #e2f3e5;
+	height: 187px;
+}
+.womenTab .bd{
+	border:1px solid #cccccc;
+	width: 1008px;
+	border-top: none;
+	padding: 40px 0 0;
+	overflow: hidden;
+	zoom:1;
+}
+.womenTab .bd p{
+  color: #565656;
+  font-size: 14px;
+  line-height: 24px;
+  padding: 0 25px;
+}
+.womenTab .bd ul{
+	overflow: hidden;
+}
+.womenTab .bd  li{
+  float: left;
+  width: 960px;
+  padding-left: 48px;
+  height: 40px;
+  line-height: 40px;
+  background:url(../images/dot2.png) no-repeat 30px center;
+  font-size:14px;
+}
+.womenTab .bd  li:last-child{
+	border-bottom: none;
+}
+.womenTab .bd  li a{
+  float: left;
+  width:746px;
+  color: #040404;
+  padding-left: 8px;
+  height: 40px;
+  line-height: 40px;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.womenTab .bd  li span{
+  float: right;
+  height: 40px;
+  line-height: 40px;
+  width: 102px;
+  color: #7e7e7e;
+}
+/* 分页样式 */
+.womenPage .page-large span,.womenPage .page-large a{
+	color:#666666; 
+	font-size: 10px;
+	line-height: 30px;
+}
+.womenPage .page-large{margin:40px 0 20px; text-align:center;}
+.womenPage .page-large a{
+	min-width:30px; 
+	height:30px; 
+	display:inline-block; 
+	border:1px solid #ccc;
+	box-sizing:border-box; 
+	-moz-box-sizing:border-box; 
+	-o-box-sizing:border-box; 
+	-webkit-box-sizing:border-box; 
+	text-align:center; float:left; 
+	text-indent:0; font-family:Arial, Helvetica, sans-serif; margin:0 8px;}
+.womenPage .page-large a.on{border:1px solid #fe5c71; background:#fe5c71; color:#fff;}
+.womenPage .page-large a.none{border:none;}
+.womenPage .page-large .Num:hover{
+	border:1px solid #fe5c71;
+    background: #ff8499;
+    border: 1px solid #d96880;
+    color: #fff;
+}
+.womenPage .page-large .on:hover{border:1px solid #fe5c71; color:#fff;}
+.womenPage .page-large .total{margin-left:0.6em;}
+
+.womenPage .page-large .prev-page,
+.womenPage .page-large .next-page{padding: 0 0.4rem;}
+.womenPage .page-large .prev-page:hover,
+.womenPage .page-large .next-page:hover{border:1px solid #ef3838;}
+/*友情链接*/
+.womenLink{
+  width: 1008px;
+  margin:21px auto 0;
+  height: 273px;
+  overflow: hidden;
+  border: 1px solid #d7d7d7;
+}
+.womenLinkTop{
+  width: 1008px;
+  height: 61px;
+  border-bottom: 1px solid #d7d7d7;
+  line-height: 61px;
+  background:#ff8499;
+  font-size: 22px;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+}
+.womenLinkTop img{
+	margin-right: 18px;
+}
+.womenLinkCont{
+  width:992px;
+  border-top: none;
+  height:191px;
+  padding-left: 20px;
+  padding-top: 16px;
+}
+.womenLinkCont a{
+  float: left;
+  width:150px;
+  height: 46px;
+  margin:22px 0 0 7px ;
+}
+.womenFoot{
+  margin-top: 26px;
+  width: 100%;
+  height: 80px;
+  padding-top: 28px;
+  background:#fff0f5;
+  text-align: left;
+  float: left;
+  border-top: 1px solid #dbdbdb;
+}

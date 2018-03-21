@@ -1,0 +1,326 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="/${res}/css/index.css" rel="stylesheet" type="text/css" />
+<link href="${base}/r/cms/www/dangjian/css/pop.css" type="text/css" rel="stylesheet">
+<title>个人中心</title>
+[#include "../include/meta.html"/]
+<script src="${base}/thirdparty/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+<script type="text/javascript" src="${base}/r/cms/www/dangjian/js/pop.js"></script>
+<script type="text/javascript">
+$(function() {
+	$("#jvForm").validate();
+});
+</script>
+<style type="text/css">
+table{border:none}
+	table tr td{border:none;pading:10px;}
+</style>
+</head>
+</head>
+
+<body>
+[#include "../include/header.html"/]
+<div class="member-con">
+  <div class="m-pos"><a href="${base}/">首页</a> > <span>个人中心</span></div>
+  <div class="member clearfix">
+    <div class="memberLeft clearfix"> 
+      <div class="member-main">
+        <div class="member-child"><a href="${base}/member/index.jspx">用户信息</a>|<a href="${base}/member/profile.jspx" class="on">修改个人资料</a>|<a href="${base}/member/pwd.jspx">修改密码</a></div>
+        <div class="member-text">
+          <form id="jvForm" action="profile.jspx" method="post">
+          <table cellpadding="0" cellspacing="0">
+            <tbody>
+              <tr>
+                <td class="s-p">真实姓名：</td><td><input type="text" name="realname" value="${user.realname!?html}" maxlength="100" class="member-change" /></td>
+                <td class="s-p">性别：</td><td>[@p.radio name="gender" value=user.gender list={"true":"男","false":"女","":"保密"}/]</td>
+              </tr>
+              <tr>
+                <td class="s-p">手机：</td><td><input type="text" name="phone" value="${user.phone!?html}" maxlength="50" class="member-change" /></td>
+                <td class="s-p">邮箱：</td><td><input type="text" name="email" value="${user.email!?html}" maxlength="50" class="member-change" /></td>
+              </tr>
+            </tbody>
+          </table>
+          <table cellpadding="0" cellspacing="0">
+            <tbody>   
+              <tr>
+              	  <td class="s-p">意向志愿：</td>
+	              <td>
+<div class="selectXqdj">
+	<input type="text" value="${user.attr.intention!}" class="member-changeOneRow" id="xqdjPop"
+		name="attr_intention" placeholder="请选择" style="width:100%" />
+	<div class="overlay"></div>
+	<div class="xqdjPopShow">
+		<div class="xqdjPopHead">
+			<h1>选择类型</h1>
+			<div class="xqdjPopBtn">
+				<a class="btnSure">确定</a> <a class="btnCancel">取消</a>
+			</div>
+		</div>
+		<div class="xqdjPopCont">
+			<div class="paddingTB">
+				<table class="chebox" cellspacing="0" cellpadding="0" border="0"
+					width="100%">
+					<tbody>
+						<tr class="zebraCol0">
+							<td class="leftClass industryLCla" nowrap="nowrap"
+								valign="middle">扶贫帮困类</td>
+							<td class="jobtypeItems">
+								<table cellspacing="0" cellpadding="0" border="0" width="100%"
+									class="cheboxSeed">
+									<tbody>
+										<tr>
+											<td width="50%" class="mOutItem"><label
+												class="noselItem"> <input type="checkbox"
+													name="onlyU_activity_type" value="扶弱扶贫">扶弱扶贫 </label>
+											</td>
+											<td width="50%" class="mOutItem"><label
+												class="noselItem"> <input type="checkbox"
+													name="onlyU_activity_type" value="敬老助残">敬老助残 </label>
+											</td>
+										</tr>
+									</tbody>
+								</table></td>
+						</tr>
+						<tr class="zebraCol0">
+							<td class="leftClass industryLCla" nowrap="nowrap"
+								valign="middle">便民利民类</td>
+							<td class="jobtypeItems">
+								<table cellspacing="0" cellpadding="0" border="0" width="100%"
+									class="cheboxSeed">
+									<tbody>
+										<tr>
+											<td width="50%" class="mOutItem"><label
+												class="noselItem"> <input type="checkbox"
+													name="onlyU_activity_type" value="政策宣传">政策宣传</label>
+											</td>
+											<td width="50%" class="mOutItem"><label
+												class="noselItem"> <input type="checkbox"
+													name="onlyU_activity_type" value="保健咨询指导">保健咨询指导</label>
+											</td>
+										</tr>
+										<tr>
+											<td width="50%" class="mOutItem"><label
+												class="noselItem"> <input type="checkbox"
+													name="onlyU_activity_type" value="法律咨询">法律咨询</label>
+											</td>
+											<td width="50%" class="mOutItem"><label
+												class="noselItem"> <input type="checkbox"
+													name="onlyU_activity_type" value="公共设施维修"">公共设施维修</label>
+											</td>
+										</tr>
+										<tr>
+											<td width="50%" class="mOutItem"><label
+												class="noselItem"> <input type="checkbox"
+													name="onlyU_activity_type" value="教学辅导">教学辅导</label>
+											</td>
+											<td width="50%" class="mOutItem"><label
+												class="noselItem"> <input type="checkbox"
+													name="onlyU_activity_type" value="职业介绍">职业介绍</label>
+											</td>
+										</tr>
+									</tbody>
+								</table></td>
+						</tr>
+						<tr class="zebraCol0">
+							<td class="leftClass industryLCla" nowrap="nowrap"
+								valign="middle">精神生活类</td>
+							<td class="jobtypeItems">
+								<table cellspacing="0" cellpadding="0" border="0" width="100%"
+									class="cheboxSeed">
+									<tbody>
+										<tr>
+											<td width="50%" class="mOutItem"><label
+												class="noselItem"> <input type="checkbox"
+													name="onlyU_activity_type" value="科普宣传">科普宣传</label>
+											</td>
+											<td width="50%" class="mOutItem"><label
+												class="noselItem"> <input type="checkbox"
+													name="onlyU_activity_type" value="文体活动指导">文体活动指导</label>
+											</td>
+										</tr>
+										<tr>
+											<td width="50%" class="mOutItem"><label
+												class="noselItem"> <input type="checkbox"
+													name="onlyU_activity_type" value="书画艺术指导">书画艺术指导</label>
+											</td>
+											<td width="50%" class="mOutItem"><label
+												class="noselItem"> <input type="checkbox"
+													name="onlyU_activity_type" value="青少年教育"">青少年教育</label>
+											</td>
+										</tr>
+										<tr>
+											<td width="50%" class="mOutItem"><label
+												class="noselItem"> <input type="checkbox"
+													name="onlyU_activity_type" value="文明新风倡导">文明新风倡导</label>
+											</td>
+											<td width="50%" class="mOutItem"><label
+												class="noselItem"> <input type="checkbox"
+													name="onlyU_activity_type" value="心理咨询">心理咨询</label>
+											</td>
+										</tr>
+										<tr>
+											<td width="50%" class="mOutItem"><label
+												class="noselItem"> <input type="checkbox"
+													name="onlyU_activity_type" value="交心谈心">交心谈心</label>
+											</td>
+											<td></td>
+										</tr>
+									</tbody>
+								</table></td>
+						</tr>
+						<tr class="zebraCol0">
+							<td class="leftClass industryLCla" nowrap="nowrap"
+								valign="middle">治安稳定类</td>
+							<td class="jobtypeItems">
+								<table cellspacing="0" cellpadding="0" border="0" width="100%"
+									class="cheboxSeed">
+									<tbody>
+										<tr>
+											<td width="50%" class="mOutItem"><label
+												class="noselItem"> <input type="checkbox"
+													name="onlyU_activity_type" value="民事调解维权">民事调解维权</label>
+											</td>
+											<td width="50%" class="mOutItem"><label
+												class="noselItem"> <input type="checkbox"
+													name="onlyU_activity_type" value="治安巡逻">治安巡逻</label>
+											</td>
+										</tr>
+										<tr>
+											<td width="50%" class="mOutItem"><label
+												class="noselItem"> <input type="checkbox"
+													name="onlyU_activity_type" value="安全隐患排查">安全隐患排查</label>
+											</td>
+											<td width="50%" class="mOutItem"><label
+												class="noselItem"> <input type="checkbox"
+													name="onlyU_activity_type" value="协警联防"">协警联防</label>
+											</td>
+										</tr>
+										<tr>
+											<td width="50%" class="mOutItem"><label
+												class="noselItem"> <input type="checkbox"
+													name="onlyU_activity_type" value="防火防毒">防火防毒</label>
+											</td>
+											<td width="50%" class="mOutItem"><label
+												class="noselItem"> <input type="checkbox"
+													name="onlyU_activity_type" value="预防疫情">预防疫情</label>
+											</td>
+										</tr>
+										<tr>
+											<td width="50%" class="mOutItem"><label
+												class="noselItem"> <input type="checkbox"
+													name="onlyU_activity_type" value="抵制非法活动">抵制非法活动</label>
+											</td>
+											<td></td>
+										</tr>
+									</tbody>
+								</table></td>
+						</tr>
+						<tr class="zebraCol0">
+							<td class="leftClass industryLCla" nowrap="nowrap"
+								valign="middle">环境保护类</td>
+							<td class="jobtypeItems">
+								<table cellspacing="0" cellpadding="0" border="0" width="100%"
+									class="cheboxSeed">
+									<tbody>
+										<tr>
+											<td width="50%" class="mOutItem"><label
+												class="noselItem"> <input type="checkbox"
+													name="onlyU_activity_type" value="环保节能宣传">环保节能宣传</label>
+											</td>
+											<td width="50%" class="mOutItem"><label
+												class="noselItem"> <input type="checkbox"
+													name="onlyU_activity_type" value="社区卫生保洁">社区卫生保洁</label>
+											</td>
+										</tr>
+										<tr>
+											<td width="50%" class="mOutItem"><label
+												class="noselItem"> <input type="checkbox"
+													name="onlyU_activity_type" value="绿化养护">绿化养护</label>
+											</td>
+											<td></td>
+										</tr>
+									</tbody>
+								</table></td>
+						</tr>
+						<tr class="zebraCol0">
+							<td class="leftClass industryLCla" nowrap="nowrap"
+								valign="middle">组织工作指导类</td>
+							<td class="jobtypeItems">
+								<table cellspacing="0" cellpadding="0" border="0" width="100%"
+									class="cheboxSeed">
+									<tbody>
+										<tr>
+											<td width="50%" class="mOutItem"><label
+												class="noselItem"> <input type="checkbox"
+													name="onlyU_activity_type" value="党建工作指导">党建工作指导</label>
+											</td>
+											<td width="50%" class="mOutItem"><label
+												class="noselItem"> <input type="checkbox"
+													name="onlyU_activity_type" value="民意收集">民意收集</label>
+											</td>
+										</tr>
+										<tr>
+											<td width="50%" class="mOutItem"><label
+												class="noselItem"> <input type="checkbox"
+													name="onlyU_activity_type" value="人口计生指导">人口计生指导</label>
+											</td>
+											<td></td>
+										</tr>
+									</tbody>
+								</table></td>
+						</tr>
+						<tr class="zebraCol0">
+							<td class="leftClass industryLCla" nowrap="nowrap"
+								valign="middle">其他</td>
+							<td class="jobtypeItems">
+								<table cellspacing="0" cellpadding="0" border="0" width="100%"
+									class="cheboxSeed">
+									<tbody>
+										<tr>
+											<td width="50%" class="mOutItem"><label
+												class="noselItem"> <input type="checkbox"
+													name="onlyU_activity_type" value="其他">其他</label>
+											</td>
+											<td></td>
+										</tr>
+									</tbody>
+								</table></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+				  </td>
+              </tr>
+              <tr>
+              	  <td class="s-p">所属支部：</td>
+	              <td>
+	              	[@cms_party_committee sponsor = user.partyId]${mainName} [#list branchs as p]- ${p.branchName}[/#list][/@cms_party_committee]
+				  </td>
+              </tr>
+              <tr>
+              	  <td class="s-p">公司名称：</td>
+	              <td>
+	              	<input type="text" name="attr_enterprise" value="${user.attr.enterprise!html}" class="member-changeOneRow"/>
+				  </td>
+              </tr>
+                            
+              <tr>
+                <td colspan="4" style="padding:25px 0 0 70px;"><input type="hidden" name="nextUrl" value="index.jspx"/><input type="submit" class="member-submit" value="提交" /><input type="reset" class="member-reset" value="重置" /></td></td>
+              </tr>
+            </tbody>
+          </table> 
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+[#include "../include/footer.html"/]
+</body>
+</html>

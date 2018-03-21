@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>jeecms-left</title>
+<#include "/jeecms_sys/head.html"/>
+<script type="text/javascript">
+$(function(){
+	Cms.leftLi();
+});
+</script>
+</head>
+<body>
+<div class="w230 f_l ove">
+    <div class="fresh" style="font-size:12px; text-indent:36px;">
+       <#include "/jeecms_sys/date.html"/>
+	</div>
+    <div class="w229">
+    	<ol>
+        <@cms_perm url="/serviceMap/v_list.do" userId="ddf">
+			<li><a href="../serviceMap/v_list.do?organizationType=STREET" target="rightFrame">区直属党（工）委管理</a></li>
+		</@cms_perm>
+		<@cms_perm url="/serviceMap/v_list.do">
+			<li><a href="../serviceMap/v_list.do?organizationType=COMMUNITY" target="rightFrame">基层党组织管理</a></li>
+		</@cms_perm>
+		<@cms_perm url="/serviceMap/v_list.do">
+			<li><a href="../serviceMap/v_list.do?organizationType=ENTERPRISE" target="rightFrame">企业管理</a></li>
+		</@cms_perm>
+        </ol>
+    </div>
+     
+</div>
+</body>
+</html>

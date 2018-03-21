@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>党建百宝箱</title>
+<link href="/${res}/css/pages.css" rel="stylesheet" type="text/css" />
+[#include "../include/meta.html"/]
+<script>
+$(function(){
+$(".djbbContTxt img").each(function(){
+	this.src=this.src.replace("$%7Bres%7D","${res}");
+});
+});
+</script>
+</head>
+<body>
+	<div class="djbbBoxRight right">
+      <div class="djbbBoxTop">${channel.name}</div>
+      <div class="djbbCont">
+      	<div class="djbbContTop">目录</div>
+        <ul class="djbbContTxt djbbList">
+        [@cms_content_list channelId = '152' titLen='15' orderBy='4' channelOption='0' dateFormat='yyyy-MM-dd']
+        [#list tag_list as a]
+			<li><a href="${a.url}"  target="djbbBoxRight">[@text_cut s=a.title len=titLen append='...'/]</a><span>[${a.date?string(dateFormat)}]</span></li>
+		[/#list]
+        [/@cms_content_list]
+        </ul>
+      </div>
+    </div>
+    <!--end of djbbBoxRight-->
+</body>
+</html>

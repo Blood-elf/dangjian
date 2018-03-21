@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>top</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<style>.xqdj{width:100%;overflow:hidden;}</style>
+</head>
+<body>
+<iframe width="100%" height="60px" style="margin-bottom: -2px" frameborder="0" scrolling="no" src="http://dwlm.12371.cn/daohang/index.shtml"></iframe>
+<div class="xqdj">
+  <div class="djflash"><embed src="/${res}/images/banner.swf" width="1440" height="216"/></div>
+</div>
+<div class="banner">
+ 	<div class="bannerfream">
+ 	 	<div class="hdnav_top left">
+	     <ul id="nav_menu" class="cen nav_menu">
+	       <li><a class="nav_link" href="${base}">首页</a></li>
+		    [@cms_channel_list]
+		    [#list tag_list as c]
+		    <li><a class="nav_link" [#if c.model.id != 0]href="${c.url}"[/#if]  target="_self" [#if channel??&&channel.id==c.id] class="selected" [/#if]>${c.name}</a>
+			    [@cms_channel_list parentId=c.id]
+			    [#if tag_list[0]??]
+			    <div class="pop_menu">
+		            <ul class="bot_line">
+						[#list tag_list as c2]
+							<li>
+						        <a href="${c2.url}" target="_blank">${c2.name}</a>
+					      	</li>
+						[/#list]
+		           	</ul>
+		         </div>
+		         [/#if]
+		         [/@cms_channel_list]
+		    </li>
+		    [/#list]
+		    [/@cms_channel_list]
+	     </ul>
+     </div>
+     <div class="search right">
+        <input class="searchInput" type="text" placeholder="请输入关键字">
+        <input type="button" class="searchBtn">
+   	 </div>
+   </div>
+</div>
+<script>
+$(function(){
+	$("#nav_menu li").each(function(){
+		if($(this).find(".pop_menu").size()>0)$(this).find("a.nav_link").addClass("upicon");
+	});
+})
+</script>
+</body>
+</html>

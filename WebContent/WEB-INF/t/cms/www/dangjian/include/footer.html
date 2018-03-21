@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+	<div class="yqlink">
+	  <div class="yqlinkTop">友情链接</div>
+	  <div class="yqlinkCont">
+	  [@cms_friendlink_list] 
+	  [#list tag_list as link]
+	  <a href="${link.domain}" onclick="$.get('${base}/friendlink_view.jspx?id=${link.id}')" target="_blank"><img src="${link.logo!}" height="45" width="150"/></a> 
+	  [/#list] 
+	  [/@cms_friendlink_list]
+	  </div>
+	</div>
+	<!--end of 友情链接-->
+<div class="footContainer">
+	<div class="foot">
+		<div class="footCont">
+		    <div class="gov left"><img src="/${res}/images/gov.png"/></div>
+		    <div class="footTxt right">
+		        <p><img class="ftyx" src="/${res}/images/ftyx.png"/>咨询邮箱：<span class="yx">xinwuquzzb@126.com</span></p>
+		        <p>苏ICP备14062139号-2  CopyRight@2017.dangjian.com.无锡新吴区党建.版权所有</p>
+		    </div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

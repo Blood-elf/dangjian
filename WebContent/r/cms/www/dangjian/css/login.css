@@ -1,0 +1,119 @@
+@charset "UTF-8";
+/**
+ * @authors Vicky Hong (Vicky198808@163.com)
+ */
+ .overlay{
+  background: rgba(0,0,0,0.7);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 11111;
+  /*display: none;*/
+  top: 0;
+}
+.login{
+  position: absolute;
+  z-index: 11112;
+  width: 463px;
+  left: 50%;
+  margin-left: -231px;
+  /*display: none;*/
+  top: 50%
+}
+.loginTop{
+  background:url(../images/titlle07.png) no-repeat;
+  width: 421px;
+  height: 55px;
+  padding: 0 19px 0 23px;
+}
+.loginTit{
+  font-size: 24px;
+  color: #fff;
+  line-height: 55px;
+}
+.loginClose{
+  width: 32px;
+  height: 32px;
+  margin-top: 11px;
+}
+.loginClose img{
+  width: 32px;
+  height: 32px;
+}
+.loginCont{
+  background: #eeeeee;
+  border: 1px solid #b8b7b7;
+  width: 354px;
+  overflow: hidden;
+  padding:0 52px 0 56px;
+}
+.loginContTop{
+  height: 70px;
+}
+.loginConTopL{
+  color: #444444;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 70px;
+}
+.loginConTopR{
+  color: #727272;
+  font-size: 14px;
+  line-height: 70px;
+}
+.loginConTopR .red{
+  color: #f12f29;
+  font-size: 14px;
+}
+.loginUser{
+}
+.loginUser input{
+  height: 40px;
+  line-height: 40px;
+  width: 314px;
+  padding-left: 38px;
+  border: 1px solid #dddddd;
+  background: #fff url(../images/login01.jpg) no-repeat 12px center;
+}
+.loginPassword{
+  margin-top: 16px;
+}
+.loginPassword input{
+  height: 40px;
+  line-height: 40px;
+  width: 314px;
+  padding-left: 38px;
+  border: 1px solid #dddddd;
+  background: #fff url(../images/login02.jpg) no-repeat 12px center;
+}
+.loginBtn{
+  width: 354px;
+  height: 48px;
+  float: left;
+  margin-top: 20px;
+}
+.loginBtn input{
+  width: 354px;
+  height: 48px;
+  border: 1px solid #a91919;
+  background: #c92c2c;
+  float: left;
+  text-align: center;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  float: left;
+}
+.loginUnusual{
+  color: #5e5e5e;
+  line-height: 38px;
+  height: 38px;
+  width: 354px;
+  float: left;
+  margin: 8px 0 20px 0;
+}
+.loginUnusual .red{
+  color: #f12f29;
+  font-size: 14px;
+  margin-left: 8px;
+}

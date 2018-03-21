@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>组织生活列表</title>
+[#include "../include/meta.html"/]
+<link href="/${res}/css/pages.css" rel="stylesheet" type="text/css" />
+<style>
+.orLifeListCont .time{width:110px;padding-left: 20px;}
+.orLifeListCont .title{width:220px}
+.orLifeListCont .sponsor{width: 200px;}
+.orLifeListCont .type{width:105px}
+.orLifeListCont .address{width:200px}
+    
+/* .orLifeListCont .contacterTel{width:138px}
+.orLifeListCont .contacter{width:138px} */
+.orLifeListCont .open{width:70px}
+.orLifeListCont .status{width:70px}
+.orLifeListCont li:nth-of-type(odd) {
+    background: beige;
+}
+#content_nav,
+.orLifeListCont li a{
+	display:flex;
+	line-height:45px;
+	
+}
+#content_nav{
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+	[#include "../include/header.html"/]
+	<div class="topBar">
+    	<div class="container">
+		    <span class="topBarTxt">您的位置：</span>
+		    <span><a href="${base}">首页</a></span>
+		    <span>&gt;</span>
+		    <span><a href="${base}/organizeLife/index.jhtml">组织生活</a></span>
+		    <span>&gt;</span>
+		    <span><a href="${base}/organizedLifeList.jhtml">组织生活列表</a></span>
+	    </div>
+	</div>
+	<div class="activity container">
+		<div class="activityTop">
+		    <span class="left">${channel.name}</span>
+		</div>
+	  	[@cms_model id="10"]
+		[#list tag_bean.items as item]
+		[#if item.field=="activity_type"]
+		  [#assign list_activity_type=item.optValue/]
+		[#elseif item.field=="status"]
+		  [#assign list_status=item.optValue/]
+		[/#if]
+		[/#list]
+		<div class="orLife" id="searchBox">
+			
+			<div class="orLifeGov">
+		      <span class="left orLifeGovTit">基层党（工）委：</span>
+		      <div class="orLifeSponsor searchLine">
+					[@cms_party_committee]
+					<select id="party_main">
+			      		<option value="-1">全部</option>
+						[#list partys as p]
+						<option value="${p.id}" [#if queryPartyMainId??][#if p.id == queryPartyMainId] selected="selected" [/#if][/#if]>${p.name}</option>
+						[/#list]
+					</select>
+					<div style="position:relative;display: inline-block;">
+						<input list="branchs" placeholder="未选择" id="sponsor" [#if sponsor??]value="${querySponsor!}"[/#if]/>
+						<datalist id="branchs"></datalist>
+						<a class="cancelButton"></a>
+					</div>
+					
+					<button onclick="search()">搜索</button>
+					<script>
+					var partys=$.parseJSON('${partysJson!}');
+					partyChange();
+					$("#party_main").on("change",function(){
+						partyChange();
+					});
+					function partyChange(){
+						var s = $("#sponsor"),b = $("#branchs");
+						s.html("");
+						b.html("");
+						opts="";
+						debugger;
+						if($("#party_main").val()=="-1"){
+							$.each(partys,function(i,party){
+								$.each(party.branchList,function(ii,branch){
+									opts+="<option branchId ='"+branch.id+"'>"+branch.branchName+"</option>";
+								});
+							});
+						}else{
+							var pm_id=$("#party_main").val();
+							$.each(partys,function(i,party){
+								if(party.id==pm_id){
+									$.each(party.branchList,function(i,branch){
+										opts+="<option branchId ='"+branch.id+"'>"+branch.branchName+"</option>";
+									});
+								}
+							});
+						}
+						b.html(opts);
+					}
+					</script>
+					[/@cms_party_committee]
+		      </div>
+		    </div>
+		    <div class="orLifeGov">
+			    <div class="orLifeGovSml">
+			      <span class="left orLifeGovTit">活动时间：</span>
+			      <div class="left orLifeTime searchLine">
+			      	<select id="activity_time">
+			      		<option value="-1">全部</option>
+			      		<option value="lastWeek" [#if activity_time! == 'lastWeek']selected = "selected" [/#if]>最近一周</option>
+				        <option value="lastMonth" [#if activity_time! == 'lastMonth']selected = "selected" [/#if]>最近一月 </option>
+				        <option value="lastThreeMonth" [#if activity_time! == 'lastThreeMonth']selected = "selected" [/#if]>最近三月 </option>
+			      	</select>
+			      </div>
+			    </div>
+			    <div class="orLifeGovSml">
+			      <span class="left orLifeGovTit searchLine">活动类型：</span>
+			      <div class="left orLifeType searchLine">
+			      	<select id="activity_type">
+			      		<option value="-1">未选择</option>
+			      		[#list list_activity_type!?split(",") as opt]
+				      	<option value="${opt!}" [#if activity_type??][#if activity_type=="${opt}"] selected = "selected"[/#if][/#if]>${opt!}</option>
+						[/#list]
+			      	</select>
+			      	
+			      </div>
+			    </div>
+			    <div class="orLifeGovSml">
+			      <span class="left orLifeGovTit">活动状态：</span>
+			      <div class="left orLifeStatus searchLine">
+					[#assign sBefore = "未开始"/]
+					[#assign sOn = "进行中"/]
+					[#assign sAfter = "已结束"/]
+			      	<select id="status">
+			      		<option value="-1">全部</option>
+						<option value="${sBefore}" [#if status??][#if status=="${sBefore}"] selected = "selected"[/#if][/#if]>${sBefore}</option>
+				      	<option value="${sOn}" [#if status??][#if status=="${sOn}"] selected = "selected"[/#if][/#if]>${sOn}</option>
+				      	<option value="${sAfter}" [#if status??][#if status=="${sAfter}"] selected = "selected"[/#if][/#if]>${sAfter}</option>
+			      	</select>
+			      </div>
+			    </div>
+		    </div>
+		</div>
+		[/@cms_model]
+		<div class="orLifeListCont">
+		[@cms_content_page count='10' myConditions=myConditions recommend='2' orderBy='4' titLen='18' channelId=105 dateFormat='yyyy-MM-dd hh:mm']
+			<div id="content_nav">
+			<span class="time">活动时间</span>
+			<span class="title">活动主题</span>
+			<span class="sponsor">主办方</span>
+			<span class="type">活动类型</span>
+			<span class="address">活动地址</span>
+			<!-- <span class="contacterTel">联系电话</span>
+			<span class="contacter">联系人</span> -->
+			<span class="open">是否开放</span>
+			<span class="status">状态</span>
+			</div>
+			<ul>
+			[#list tag_pagination.list as a]
+			[#assign status = "未开始"]
+			[#if a.attr.status??]
+				[#if a.attr.status=="已结束"]
+					[#assign status = a.attr.status]
+				[/#if]
+			[#else]
+				[#if a.attr.activity_time!?date gt .now?date]
+				[#else]
+					[#assign status = "进行中"]
+				[/#if]
+			[/#if]
+			[#if activity_type??]
+				[#if activity_type == ""]
+					[#assign activity_typeTxt = a.attr.activity_type!?split(",")[0]]
+				[#else]
+					[#assign activity_typeTxt = activity_type]
+				[/#if]
+			[#else]
+				[#assign activity_typeTxt = a.attr.activity_type!?split(",")[0]]
+			[/#if]
+			
+			<li><a href="${a.url}">
+				<span class="time">${a.attr.activity_time!}</span>
+				<span class="title">[@text_cut s=a.title len=titLen append='...'/]</span>
+				<span class="sponsor">[#if a.attr.sponsor??][@cms_party_committee sponsor = a.attr.sponsor][#list branchs as p]${p.branchName}[/#list][/@cms_party_committee][/#if]</span>
+				<span class="type">${activity_typeTxt}</span>
+				<span class="address">${a.attr.address!}</span>
+				<span class="open">${a.attr.open!}</span>
+				<span class="status">${status}</span>
+			</a></li>
+	        [/#list]
+	        </ul>
+		</div>
+	    [#include "../include/page.html"/]
+		[/@cms_content_page]
+	</div>
+	[#include "../include/footer.html"/]
+</div>
+<script>
+	function search(){
+		debugger;
+		var url = "${base}/channel/searchOrganizeLifeList.jspx?";
+		var party_main = $("#party_main").val();
+		var sponsor = $("#sponsor").val();
+		var activity_time = $("#activity_time").val();
+		var activity_type = $("#activity_type").val();
+		var status = $("#status").val();
+		debugger;
+		if(party_main&&party_main!=-1)url+="party_main="+party_main+"&";
+		if(sponsor&&sponsor!=-1)url+="sponsor="+sponsor+"&";
+		if(activity_time!=-1)url+="activity_time="+activity_time+"&";
+		if(activity_type!=-1)url+="activity_type="+activity_type+"&";
+		if(status!=-1)url+="status="+status+"&";
+
+		url= url.substring(0, url.length-1);
+		location.href = url;
+	}
+	$("#sponsor").on("change",cancelButtonReset);
+	$("#sponsor").on("keyup",cancelButtonReset);
+	$(".cancelButton").on("click",function(){$("#sponsor").val("");$(this).hide();});
+	cancelButtonReset();
+	function cancelButtonReset(){
+		var s=$("#sponsor");
+		var c=$(".cancelButton");
+		if(s.val()){
+			c.show();
+		}else{
+			c.hide();
+		}
+	}
+</script>
+</body>
+</html>

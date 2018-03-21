@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>${channel.name}</title>
+[#include "../include/meta.html"/]
+<link href="/${res}/css/pages.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+<div class="wrapper">
+	[#include "../include/header.html"/]
+	[#include "../include/channelNav.html"/]
+	<div class="activity container">
+		<div class="activityTop">
+		    <span class="left">${channel.name}</span>
+	  	</div>
+	  	<div class="orLife" id="searchBox">
+			
+			<div class="orLifeGov">
+		      <span class="left orLifeGovTit">基层党（工）委：</span>
+		      <div class="orLifeSponsor searchLine">
+					[@cms_party_committee]
+					<select id="party_main">
+			      		<option value="-1">全部</option>
+						[#list partys as p]
+						<option value="${p.id}" [#if queryPartyMainId??][#if p.id == queryPartyMainId] selected="selected" [/#if][/#if]>${p.name}</option>
+						[/#list]
+					</select>
+					<div style="position:relative;display: inline-block;">
+						<input list="branchs" placeholder="未选择" id="sponsor" [#if sponsor??]value="${querySponsor!}"[/#if]/>
+						<datalist id="branchs"></datalist>
+						<a class="cancelButton"></a>
+					</div>
+					
+					<button onclick="search()">搜索</button>
+					<script>
+					var partys=$.parseJSON('${partysJson!}');
+					partyChange();
+					$("#party_main").on("change",function(){
+						$("#sponsor").val("");
+						partyChange();
+					});
+					function partyChange(){
+						var b = $("#branchs");
+						b.html("");
+						opts="";
+						debugger;
+						if($("#party_main").val()=="-1"){
+							$.each(partys,function(i,party){
+								$.each(party.branchList,function(ii,branch){
+									opts+="<option branchId ='"+branch.id+"'>"+branch.branchName+"</option>";
+								});
+							});
+						}else{
+							var pm_id=$("#party_main").val();
+							$.each(partys,function(i,party){
+								if(party.id==pm_id){
+									$.each(party.branchList,function(i,branch){
+										opts+="<option branchId ='"+branch.id+"'>"+branch.branchName+"</option>";
+									});
+								}
+							});
+						}
+						b.html(opts);
+					}
+					</script>
+					[/@cms_party_committee]
+		      </div>
+		    </div>
+		    <div class="orLifeGov">
+			    <div class="orLifeGovSml">
+			      <span class="left orLifeGovTit">活动时间：</span>
+			      <div class="left orLifeTime searchLine">
+			      	<select id="activity_time">
+			      		<option value="-1">全部</option>
+			      		<option value="lastWeek" [#if activity_time! == 'lastWeek']selected = "selected" [/#if]>最近一周</option>
+				        <option value="lastMonth" [#if activity_time! == 'lastMonth']selected = "selected" [/#if]>最近一月 </option>
+				        <option value="lastThreeMonth" [#if activity_time! == 'lastThreeMonth']selected = "selected" [/#if]>最近三月 </option>
+			      	</select>
+			      </div>
+			    </div>
+			    <div class="orLifeGovSml">
+			      <span class="left orLifeGovTit searchLine">活动类型：</span>
+			      <div class="left orLifeType">
+			      	[#if queryActivityType??][#assign queryPop=queryActivityType][/#if]
+			      	[#include "../include/pop.html"/]
+			      </div>
+			    </div>
+			    <div class="orLifeGovSml">
+			      <span class="left orLifeGovTit">活动状态：</span>
+			      <div class="left orLifeStatus searchLine">
+					[#assign sBefore = "未开始"/]
+					[#assign sOn = "进行中"/]
+					[#assign sAfter = "已结束"/]
+			      	<select id="status">
+			      		<option value="-1">全部</option>
+						<option value="${sBefore}" [#if status??][#if status=="${sBefore}"] selected = "selected"[/#if][/#if]>${sBefore}</option>
+				      	<option value="${sOn}" [#if status??][#if status=="${sOn}"] selected = "selected"[/#if][/#if]>${sOn}</option>
+				      	<option value="${sAfter}" [#if status??][#if status=="${sAfter}"] selected = "selected"[/#if][/#if]>${sAfter}</option>
+			      	</select>
+			      </div>
+			    </div>
+		    </div>
+		</div>
+		<div class="orLifeCont">
+		[@cms_content_page count='6' myConditions=myConditions recommend='2' orderBy='4' titLen='18' channelId=channel.id dateFormat='yyyy-MM-dd hh:mm']
+			[#list tag_pagination.list as a]
+			<div class="orLifeModule left">
+				<div class="orLifeImg">
+					<a href="${a.url}"><img src="${a.titleImg!}"/></a>
+					<div class="orLifeTxtDiv">
+						<span class="orLifeTxt">[@text_cut s=a.title len=titLen append='...'/]</span>
+						<span class="orLifeTxtBg"></span>
+					</div>
+				</div>
+				<div class="orLifeModule01">
+					<div class="orLifeSj left">时间：<span class="red">${a.attr.activity_time!}</span></div>
+					<div class="orLifeZb right">主办：[@cms_party_committee sponsor=a.attr.sponsor][#list branchs as p]<span title= "${p.branchName}">${p.branchName}</span>[/#list][/@cms_party_committee]</div>
+				</div>
+				<div class="orLifeModule02">
+					<div class="orLifeAddress left">地址：<span class="red">[@text_cut s=a.attr.address len=titLen append='...'/]</span></div>
+					<div class="orLifeBtn right"><a href="${a.url}"><img src="/${res}/images/orBtn.jpg"/></a></div>
+				</div>
+			</div>
+	        [/#list]
+		</div>
+	    [#include "../include/page.html"/]
+		[/@cms_content_page]
+	</div>
+	[#include "../include/footer.html"/]
+</div>
+<script>
+	function search(){
+		debugger;
+		var url = "${base}/channel/searchVoluntaryService.jspx?";
+		var party_main = $("#party_main").val();
+		var sponsor = $("#sponsor").val();
+		var activity_time = $("#activity_time").val();
+		var activity_type=$("#xqdjPop").val();
+
+		var status = $("#status").val();
+		debugger;
+		if(party_main&&party_main!=-1)url+="party_main="+party_main+"&";
+		if(sponsor&&sponsor!=-1)url+="sponsor="+sponsor+"&";
+		if(activity_time!=-1)url+="activity_time="+activity_time+"&";
+		if(activity_type)url+="activity_type="+activity_type+"&";
+		if(status!=-1)url+="status="+status+"&";
+		url= url.substring(0, url.length-1);
+		location.href = url;
+	}
+	$("#sponsor").on("change",cancelButtonReset);
+	$("#sponsor").on("keyup",cancelButtonReset);
+	$(".cancelButton").on("click",function(){$("#sponsor").val("");$(this).hide();});
+	cancelButtonReset();
+	function cancelButtonReset(){
+		var s=$("#sponsor");
+		var c=$(".cancelButton");
+		if(s.val()){
+			c.show();
+		}else{
+			c.hide();
+		}
+	}
+</script>
+</body>
+</html>

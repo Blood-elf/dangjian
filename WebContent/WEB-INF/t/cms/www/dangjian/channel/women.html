@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>无锡新吴区妇联</title>
+<meta name="description" content="无锡新吴区妇联">
+<meta name="keywords" content="无锡新吴区妇联">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="cache-control" content="max-age=0" />
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="pragma" content="no-cache" />
+<link href="/${res}/css/common.css" type="text/css" rel="stylesheet" />
+<link href="/${res}/css/women.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/${res}/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="/${res}/js/jquery.SuperSlide.2.1.1.js"></script>
+</head>
+<body>
+<div class="wrapper">
+	<div class="container">
+		<div class="womenLogo left"><img src="/${res}/images/womenLogo.jpg"/></div>
+		<div class="womenBanner right">
+			<ul>
+				<li class="active"><a  href=""><span>首页</span><span>HOME</span></a></li>
+				<li><a href="${base}/">返回联盟首页</a></li>
+				<li><a href="http://www.12371.cn/">共产党员网</a></li>
+				<li><a href="${base}/jeeadmin/jeecms/login.do">管理员登录</a></div></li>
+			</ul>
+		</div>
+	</div>
+	<div class="womenTop">
+		<div class="womanImg01"><a href=""><img src="/${res}/images/womanImg01.jpg"/></a></div>
+		<!--end of womanImg01-->
+		<div class="womenTab">
+			<div class="hd">
+				<ul>
+					<li class="zjfl">
+						<img class="womenTabIcon" src="/${res}/images/zjfl.png"/>
+						<span class="womenTxt01">Women’s federation profile</span>
+						<span class="womenTxt02">走进妇联</span>
+					</li>
+					<li class="fldt">
+						<img class="womenTabIcon" src="/${res}/images/fldt.png"/>
+						<span class="womenTxt01">Women’s federation news</span>
+						<span class="womenTxt02">妇联动态</span>
+					</li>
+					<li class="wjzl">
+						<img class="womenTabIcon" src="/${res}/images/wjzl.png"/>
+						<span class="womenTxt01">documents</span>
+						<span class="womenTxt02">文件资料</span>
+					</li>
+					<li class="zxyx">
+						<img class="womenTabIcon" src="/${res}/images/zxyx.png"/>
+						<span class="womenTxt01">Chairman’s E-mail</span>
+						<span class="womenTxt02">主席信箱</span>
+					</li>
+				</ul>
+			</div>
+			<!--end of tab 头部-->
+			<div class="bd">
+				<div class="bdUL01">
+				[@cms_content_list channelId='142' count='1']
+		        [#list tag_list as c]
+		        ${c.txt!}
+		        [/#list]
+		        [/@cms_content_list]
+		        </div>
+				<!--end of 走进妇联-->
+				<div class="bdUL02">
+		        [@cms_content_page channelId='143' count='10' titLen='15' orderBy='4' channelOption='0' dateFormat='yyyy-MM-dd']
+					<ul>
+					[#list tag_pagination.list as a]
+					<li><a href="${a.url}" target="_blank">[@text_cut s=a.title len=titLen append='...'/]</a><span class="date">[${a.date?string(dateFormat)}]</span></li>
+			        [/#list]
+					</ul>
+					<div class="womenPage">
+			    	[#include "../include/page_large.html"/]
+					</div>
+		  	   	[/@cms_content_page]
+				</div>
+				<!--end of 妇联动态-->
+				<div class="bdUL03">
+		        [@cms_content_page channelId='144' count='10' titLen='15' orderBy='4' channelOption='0' dateFormat='yyyy-MM-dd']
+					<ul>
+					[#list tag_pagination.list as a]
+					<li><a href="${a.url}" target="_blank">[@text_cut s=a.title len=titLen append='...'/]</a><span class="date">[${a.date?string(dateFormat)}]</span></li>
+			        [/#list]
+					</ul>
+					<div class="womenPage">
+			    	[#include "../include/page_large.html"/]
+					</div>
+		  	   	[/@cms_content_page]
+				</div>
+				<!--end of 文件资料-->
+				<div class="bdUL04">
+				[@cms_content_list channelId='160' count='1']
+		        [#list tag_list as c]
+		        ${c.txt!}
+		        [/#list]
+		        [/@cms_content_list]
+		        </div>
+				<!--end of 主席-->
+			</div>
+		</div>
+		<!--end of womanTab-->
+	</div>
+	<!--end of womenTop-->
+	<div class="womenLink">
+	  <div class="womenLinkTop"><img src="/${res}/images/womenLink.png"/>友情链接</div>
+	  <div class="womenLinkCont">
+	  [@cms_friendlink_list] 
+	  [#list tag_list as link]
+	  <a href="${link.domain}" onclick="$.get('${base}/friendlink_view.jspx?id=${link.id}')" target="_blank"><img src="${link.logo!}" height="45" width="150"/></a> 
+	  [/#list] 
+	  [/@cms_friendlink_list]
+	  </div>
+	</div>
+	<!--end of womenLink-->
+	<div class="womenFoot">
+	<div class="footCont">
+	    <div class="gov left"><img src="/${res}/images/gov.png"/></div>
+	    <div class="footTxt right">
+	        <p><img class="ftyx" src="/${res}/images/ftyx.png"/>咨询邮箱：<span class="yx">xinwuqudangjian@dangjian.gov.cn</span></p>
+	        <p>粤ICP备14062139号-2  CopyRight@2013.dangjian.com.深圳南山党建.版权所有</p>
+	    </div>
+	</div>
+	</div>
+</div>
+</body>
+<script type="text/javascript">
+jQuery(".womenTab").slide();
+$(function(){
+	$('.bdUL01 li:odd').css("background-color","#fff9fb");
+	$('.bdUL02 li:odd').css("background-color","#fff9fb");
+	$('.bdUL03 li:odd').css("background-color","#fff9fb");
+	$('.bdUL04 li:odd').css("background-color","#fff9fb");
+})
+</script>
+</html>

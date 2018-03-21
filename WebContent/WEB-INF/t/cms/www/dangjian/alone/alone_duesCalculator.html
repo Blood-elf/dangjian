@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>党费计算</title>
+[#include "../include/meta.html"/]
+<link href="/${res}/css/pages.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<div class="djbbBoxRight right">
+      <div class="djbbBoxTop">党费计算</div>
+      <div class="dfCalculation">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <thead>
+            <tr>
+              <td class="dystyle">党员类型</td>
+              <td class="dfjs">党费计算</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="title">
+                <img class="dfjsImg" src="/${res}/images/dfjs01.jpg"/>
+                <span class="dfTxt01">党政机关、人民团体、各类企事业单位党员</span>
+              </td>
+              <td class="content">请输入月工资<input class="dfInput" type="text" name="">元，每月应缴党费 <span class="dftotal">0.00</span> 元</td>
+            </tr>
+            <tr>
+              <td class="title">
+                <img class="dfjsImg" src="/${res}/images/dfjs02.jpg"/>
+                <span class="dfTxt02">离退休党员</span>
+              </td>
+              <td class="content">请输入月工资<input class="dfInput" type="text" name="retired">元，每月应缴党费 <span class="dftotal">0.00</span> 元</td>
+            </tr>
+            <tr>
+              <td class="title">
+                <img class="dfjsImg" src="/${res}/images/dfjs03.jpg"/>
+                <span class="dfTxt02">农村、社区居民党员</span>
+            </td>
+              <td class="content">无经济收入。每月应交党费<span class="dftotal">0.20</span>元<br/>有经济收入。请输入月工资<input class="dfInput" type="text" name="">元，每月应缴党费 <span class="dftotal">0.00</span> 元</td>
+            </tr>
+            <tr>
+              <td class="title">
+                <img class="dfjsImg" src="/${res}/images/dfjs04.jpg"/>
+                <span class="dfTxt02">生活困难党员</span>
+              </td>
+              <td class="content">每月应缴党费 <span class="dftotal">0.20</span> 元</td>
+            </tr>
+            <tr>
+              <td class="title">
+                <img class="dfjsImg" src="/${res}/images/dfjs04.jpg"/>
+                <span class="dfTxt02">学生党员</span>
+              </td>
+              <td class="content">每月应缴党费 <span class="dftotal">0.20</span> 元</td>
+            </tr>
+            <tr>
+            	<td colspan="2" style="border-bottom: 1px solid #d9c1b5;padding:20px 20px;">
+            	<p>计算公式：</p>
+            	<p>普通党员，每月工资收入(税后)在 3000 元以下(含 3000 元)者，交纳月工资收入的 0.5%；3000 元以上至 5000 元(含 5000 元)者，交纳 1%；5000 元以上至 10000元(含 10000 元)者，交纳 1.5%；10000 元以上者，交纳 2%。</p>
+            	<p>离退休党员，每月工资收入(税后)在 5000 元以下(含 5000 元)者，交纳月工资收入的 0.5%；5000 元以上者，交纳 1%。</p>
+            	</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script>
+    	$(function(){
+    		var dfInputVal = "";
+    		$(".dfInput").on("input propertychange",function(){
+    			var reg = /^([1-9]\d*|0)(\.\d{0,2})?$/;
+   				num = $(this).val().replace("。",".").replace(",",".").replace("，",".");
+   				if(num){
+	   				if(!reg.test(num)){
+	   					alert("输入内容不合规格");
+	   					num = dfInputVal;
+	   				}
+   				}
+   				dfInputVal=num;
+			  	$(this).val(dfInputVal);
+			  	calculator($(this));
+    		});
+    	});
+   		function calculator(input){
+   			debugger;
+               var name = input.attr("name");
+   			var num = input.val();
+   			if(num.substr(-1)=="."){
+   				num = num.substr(0,num.length-1);
+   			}
+   			num=num?num:0;
+   			var tax = getTax(name,num);
+   			var dftotal = input.next(".dftotal");
+   			dftotal.text(decimal(num*tax/100,2));
+   		}
+		function getTax(name,num){
+		  var tax = 0;
+		  if(name=="retired"){
+		    if(num<=5000){
+		        tax = 0.5;
+		    }else{
+		        tax = 1;
+		    }
+		  
+		  }else{
+		    if(num<=3000){
+		        tax = 0.5;
+		    }else if(num>3000&&num<=5000){
+		        tax = 1;
+		    }else if(num>5000&&num<=10000){
+		        tax = 1.5;
+		    }else if(num>10000){
+		        tax = 2;
+		    }
+		  }
+		  return tax;
+		}
+   		function decimal(num,v){
+			var vv = Math.pow(10,v);
+			return Math.round(num*vv)/vv;
+		}
+    </script>
+    <!--end of djbbBoxRight-->
+</body>
+</html>

@@ -1,0 +1,152 @@
+@charset "UTF-8";
+/**
+ *
+ *  @authors Vicky Hong (Vicky198808@163.com)
+ */
+.selectXqdj{
+	position:relative;
+    z-index: 9999;
+}
+.xqdjPop{
+  /* min-width: 240px; */
+  /* border: 1px solid #dddddd; */
+  border: none;
+  text-align: left;
+  background: none;
+}
+.overlay{
+  position:fixed;
+  display: none;
+  background-color:rgba(0,0,0,0.2);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+.xqdjPopShow{
+  position:absolute;
+  display: none;
+  top: 0px;
+  z-index: 2;
+}
+/*.xqdjPopHead{
+  width: 240px;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 4px;
+  border: 1px solid #b5d1e3;
+  border-bottom: none;
+  margin-top: 2px;
+  background: #fff;
+}*/
+.xqdjPopHead{
+  background: url(../images/pop/se.png) no-repeat scroll 0 -135px #FFF;
+  /*float: left;*/
+  height: 32px;
+  line-height: 32px;
+  margin-bottom: -1px;
+  width: 232px;
+  position: absolute;
+  z-index: 3;
+  padding-left: 8px;
+}
+.xqdjPopHead h1{
+  font-size: 12px;
+  font-weight: bold;
+  color: #2f59ab;
+  font-family: tahoma;
+  float: left;
+}
+.xqdjPopBtn{
+  float: right;
+  margin-right: 8px;
+  color: #fff;
+  font-size: 12px;
+}
+.btnSure{
+  color: #ad5700;
+  font-size: 12px;
+  background: url(../images/pop/index.png) -317px -90px no-repeat;
+  width: 60px;
+  height: 23px;
+  display: inline-block;
+  padding: 0;
+  text-align: center;
+  line-height: 1;
+  line-height: 23px;
+  float: left;
+  margin-right: 10px;
+  margin-top: 3px;
+}
+.btnCancel{
+  font-size: 12px;
+  background: url(../images/pop/index.png) -378px -90px no-repeat;
+  color: #2f59ab;
+    width: 48px;
+  height: 23px;
+  display: inline-block;
+  padding: 0;
+  text-align: center;
+  line-height: 1;
+  line-height: 23px;
+  float: left;
+  margin-top: 3px;
+}
+.xqdjPopCont{
+  background: #fff;
+  border:  1px solid #b5d1e3;
+  width: 710px;
+  position: absolute;
+  z-index: 2;
+  top:31px;
+}
+.paddingTB{
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.xqdjPopCont table{
+  width: 100%;
+  margin: 0;
+  border-collapse: separate;
+}
+.xqdjPopCont .zebraCol0{
+  background: #fff;
+}
+.xqdjPopCont table.chebox td {
+  padding: 1px 2px;
+}
+.xqdjPopCont td.industryLCla {
+  width: 184px;
+}
+.xqdjPopCont td.leftClass {
+  text-align: right!important;
+  padding-right: 5px!important;
+  vertical-align: middle;
+  font-weight: bold;
+}
+
+.xqdjPopCont td label {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+/*下拉框中选中seledItem  未选中默认noselItem*/
+.xqdjPopCont label.noselItem{
+    color: #666;
+    cursor: pointer;
+}
+.xqdjPopCont label.seledItem {
+    color: #ff7100;
+    cursor: pointer;
+}
+.jobtypeItems input {
+    margin-right: 3px;
+    vertical-align: middle;
+}
+.xqdjPopCont .chebox tr:nth-child(even){
+  background:#eff6ff;
+}
+.xqdjPopCont .chebox .cheboxSeed tr:nth-child(even){
+  background: none;
+}

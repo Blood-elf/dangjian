@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>党建百宝箱</title>
+<link href="/${res}/css/pages.css" rel="stylesheet" type="text/css" />
+[#include "../include/meta.html"/]
+<script>
+$(function(){
+$(".djbbContTxt img").each(function(){
+	this.src=this.src.replace("$%7Bres%7D","${res}");
+});
+});
+</script>
+</head>
+<body>
+	<div class="djbbBoxRight right">
+      <div class="djbbBoxTop">${content.title}</div>
+      <div class="djbbCont">
+        [#if content.shortTitle??]<div class="djbbContTop">${content.shortTitle!}</div>[/#if]
+        [#if content.description??]<div class="djbbContFrom">${content.description!}</div>[/#if]
+        <div class="djbbContTxt">${content.txt!}</div>
+      </div>
+    </div>
+    <!--end of djbbBoxRight-->
+</body>
+</html>

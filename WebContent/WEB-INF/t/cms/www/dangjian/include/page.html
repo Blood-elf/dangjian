@@ -1,0 +1,28 @@
+[#--
+pageClass: 翻页DIV class
+pageStyle: 翻页DIV style
+currPageClass:当前页码class
+norPageClass:其他页码class
+--]
+[#assign p=tag_pagination/]
+<div class="newPage">
+	<!-- <span>[#--@cms_pagination sysPage='1'/--]</span> -->
+    <span class="newsTotal">共${p.totalCount}条记录</span>
+    <span class="newsIndex"><a href ="${hrefFormer}_1${hrefLatter}">首页</a></span>
+    <span class="newsPrevious"><a href ="${hrefFormer}_${p.prePage}${hrefLatter}">上一页</a></span>
+    <span class="newsNext"><a href ="${hrefFormer}_${p.nextPage}${hrefLatter}">下一页</a></span>
+    <span class="newsLast"><a href ="${hrefFormer}_${p.totalPage}${hrefLatter}">尾页</a></span>
+    <span class="newsSelect">
+    	<select>
+    		<option style="hiddden:true">${p.pageNo}/${p.totalPage}</option>
+    		[#list 1..p.totalPage as page]
+    			<option value ="${hrefFormer}[#if page gt 1]_${page}[/#if]${hrefLatter}">${page}/${p.totalPage}</option>
+			[/#list]
+		</select>
+	</span>
+    <script>
+    $(".newPage select").on("change",function(){
+    	location.href=$(this).val();
+    });
+    </script>
+</div>

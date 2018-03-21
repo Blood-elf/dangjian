@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>${content.title} - ${content.channel.name} - ${site.name}</title>
+[#include "../include/meta.html"/]
+<link href="/${res}/css/pages.css" rel="stylesheet" type="text/css" />
+<style>
+	.newsDetailTxt p{
+	    line-height: 22px;
+	    color: #565656;
+	    font-size: 14px;
+	}
+	.jd{text-align:center;}
+	#activityInfoDiv{margin-bottom: 15px;}
+	#activityInfoDiv td{
+	    line-height: 22px;
+	    font-size: 15px;
+	    padding-bottom: 10px;
+	    vertical-align:text-top;
+    }
+    .labelTd {
+    	width:120px;
+    	font-weight: 600;
+    }
+    .labelTx {
+    	width:300px;
+    }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  [#include "../include/header.html"/]
+  [#include "../include/channelNav.html"/]
+<!--end of 导航-->
+  
+  <div class="activity container">
+    <div class="activityTop">
+      <span class="left">组织生活</span>
+    </div>
+    <div class="activityCont01">
+      <div class="activityTxt01 left">
+        <span class="zbdw">主办单位</span>
+        <span class="jd">[#if content.attr.sponsor??][@cms_party_committee sponsor = content.attr.sponsor][#list branchs as p]${p.branchName}[/#list][/@cms_party_committee][/#if]</span>
+      </div>
+      <div class="newsDetailCont right">
+        <p class="newsDetailTit">${content.title!}</p>
+      	<div id="activityInfoDiv">
+      		<table>
+      			<tr>
+      				<td class="labelTd">活动时间：</td><td class="labelTx">${content.attr.activity_time}</td>
+      				<td class="labelTd">活动类型：</td>
+      				<td class="labelTx">
+      			        [#list content.attr.activity_type!?split(",") as opt]
+				        	<p>${opt!}</p>
+				        [/#list]
+      				</td>
+      			</tr>
+      			<tr>
+      				<td class="labelTd">联系人：</td><td class="labelTx">${content.attr.contacter!}</td>
+      				<td class="labelTd">联系电话：</td><td class="labelTx">${content.attr.contacterTel!}</td>
+      			</tr>
+      			<tr>
+      				<td class="labelTd">活动地址：</td><td class="labelTx">${content.attr.address!}</td>
+      				<td class="labelTd">是否开放：</td><td class="labelTx">${content.attr.open!}</td>
+      			</tr>
+      		</table>
+      	</div>
+        <div class="newsDetailTxt">${content.txt!}</div>
+        <!-- <span>发布时间：${content.releaseDate}</span> -->
+      </div>
+    </div>
+    [#if user??][#if user.group??][#if user.group.name??][#if content.attr.status??][#if content.attr.status="已结束"][#if content.attr.isPublish="是"]
+    <div class="activityCont02">
+
+      <div class="absent left">出席情况</div>
+      <div class="absentList left">
+      [#if content.attr.numMemberTotal??]
+      	<p>党员总数：${content.attr.numMemberTotal}</p>
+      [/#if]
+      [#if content.attr.numMemberShould??]
+      	<p>应参加党员数：${content.attr.numMemberShould}</p>
+      [/#if]
+      [#if content.attr.numReal??]
+      	<p>实参加党员数：${content.attr.numReal}</p>
+      [/#if]
+      [#if content.attr.numCivilianJoin??]
+      	<p>其他参与人数：${content.attr.numCivilianJoin}</p>
+      [/#if]
+      </div>
+    </div>
+    [#if content.attr.organizeLifeSummary??]
+    <div class="activityCont03">
+      <div class="absent left">活动内容</div>
+   	  <div class="newsDetailCont right">
+   	  	<div style="margin-bottom:15px">主持人：${content.attr.presenter!}&nbsp;&nbsp;&nbsp;&nbsp;记录人：${content.attr.recorder!}&nbsp;&nbsp;</div>
+        <div class="newsDetailTxt">${content.attr.organizeLifeSummary!}</div>
+      </div>
+    </div>
+    [/#if]
+    [/#if][/#if][/#if][/#if][/#if][/#if]
+  </div>
+  [#include "../include/footer.html"/]
+</div>
+</body>
+</html>
